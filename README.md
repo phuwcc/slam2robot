@@ -1,34 +1,53 @@
-# SLAM2ROBOT - ROS 2 Simulation Package
+# 🤖 SLAM2ROBOT - ROS 2 Simulation Package
 
 ![Ubuntu 22.04](https://img.shields.io/badge/Ubuntu-22.04-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
 ![ROS 2 Humble](https://img.shields.io/badge/ROS_2-Humble-34a853?style=for-the-badge&logo=ros&logoColor=white)
 ![Gazebo](https://img.shields.io/badge/Gazebo-Classic-FFB200?style=for-the-badge&logo=gazebo&logoColor=black)
 ![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
-## 1. Giới thiệu
+---
 
-Package `slam2robot` mô phỏng robot bánh xích có tay máy 2 bậc tự do trong Gazebo, kèm các cảm biến phục vụ SLAM 2D:
+## 📌 Giới thiệu
 
-- LiDAR `/scan`
-- Camera `/camera/image_raw`
-- IMU `/imu`
-- Odom từ plugin `gazebo_ros_diff_drive`
+Package `slam2robot` là môi trường mô phỏng robot bánh xích tích hợp tay máy 2 bậc tự do trong Gazebo, có thêm cảm biến để chạy `SLAM Cartographer 2D`.
 
-Hiện package hỗ trợ:
+Hệ thống bao gồm:
 
-- Mô phỏng robot trong Gazebo
-- Điều khiển robot bằng `cmd_vel`
-- Điều khiển tay máy 2 khớp
-- Chạy `Cartographer 2D` để dựng bản đồ
+- Mô hình **URDF + mesh**
+- Tích hợp **Camera, LiDAR, IMU**
+- Odom từ plugin **gazebo_ros_diff_drive**
+- Điều khiển **diff-drive bằng bàn phím**
+- Sử dụng **ros2_control** cho 2 khớp tay `l1`, `l2`
+- Node `arm_controller` để nhập góc điều khiển tay máy
+- Launch `cartographer.launch.py` để dựng bản đồ 2D
 
-## 2. Yêu cầu hệ thống
+---
 
-Đã kiểm tra với:
+## ✨ Thành phần chính
 
-- Ubuntu 22.04
-- ROS 2 Humble
+- 🚗 Robot bánh xích
+- 🤖 Tay máy 2 khớp quay
+- 📡 Hệ thống cảm biến:
+  - LiDAR (`/scan`)
+  - Camera (`/camera/image_raw`)
+  - IMU (`/imu`)
+- 🗺️ SLAM:
+  - Cartographer 2D
+  - Occupancy Grid (`/map`)
+- 🎮 Điều khiển:
+  - Bàn phím (`/cmd_vel`)
+  - Nhập góc tay máy
 
-Cài dependency:
+---
+
+## 🛠️ 1. Yêu cầu hệ thống
+
+Môi trường đã kiểm tra với:
+
+- **Ubuntu 22.04**
+- **ROS 2 Humble**
+
+### Cài đặt dependencies
 
 ```bash
 sudo apt update
@@ -43,7 +62,8 @@ sudo apt install -y \
   ros-humble-turtlebot3-gazebo \
   ros-humble-teleop-twist-keyboard \
   ros-humble-cartographer \
-  ros-humble-cartographer-ros
+  ros-humble-cartographer-ros \
+  ros-humble-nav2-map-server
 ```
 
 Nếu chưa có workspace:
@@ -53,9 +73,9 @@ mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
 ```
 
-Đặt package `slam2robot` vào `~/ros2_ws/src`.
+Đặt package `slam2robot` vào trong `~/ros2_ws/src`.
 
-## 3. Build package
+## 2. Build package
 
 ```bash
 cd ~/ros2_ws
@@ -64,37 +84,47 @@ colcon build --packages-select slam2robot
 source install/setup.bash
 ```
 
-Mỗi terminal mới nên chạy:
+Mỗi terminal mới đều nên chạy:
 
 ```bash
+cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
-source ~/ros2_ws/install/setup.bash
+source install/setup.bash
 ```
 
-## 4. Chạy mô phỏng Gazebo
+## 3. Chạy mô phỏng Gazebo
 
 ```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 ros2 launch slam2robot gazebo.launch.py
 ```
 
 Launch này sẽ:
 
-- nạp `robot_description`
-- mở Gazebo với `turtlebot3_world`
-- spawn robot vào môi trường
-- khởi tạo controller cho tay máy
+- Nạp `robot_description`
+- Mở Gazebo với `turtlebot3_world`
+- Spawn robot vào môi trường
+- Khởi tạo `joint_state_broadcaster`
+- Khởi tạo `joint_position_controller` cho cánh tay
 
-## 5. Điều khiển robot
+## 4. Điều khiển robot di chuyển bằng bàn phím
+
+Robot sử dụng plugin `gazebo_ros_diff_drive`, vì vậy có thể điều khiển bằng `cmd_vel`.
 
 Mở terminal mới:
 
 ```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
 
-Node này publish lên `/cmd_vel`.
+Node này mặc định publish lên `/cmd_vel`.
 
-Phím thường dùng:
+Phím hay dùng:
 
 - `i`: tiến
 - `,`: lùi
@@ -102,21 +132,24 @@ Phím thường dùng:
 - `l`: quay phải
 - `k`: dừng
 
-## 6. Điều khiển tay máy
+## 5. Điều khiển cánh tay
 
 Mở terminal mới:
 
 ```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 ros2 run slam2robot arm_controller
 ```
 
-Node publish lên:
+Node `arm_controller` publish lên topic:
 
 ```bash
 /joint_position_controller/commands
 ```
 
-Nhập theo dạng:
+Cách nhập:
 
 ```text
 l1 l2
@@ -129,31 +162,67 @@ Ví dụ:
 1.0 1.2
 ```
 
+Ý nghĩa:
+
+- Robot đưa `l1` tới góc mục tiêu
+- Chờ 2 giây
+- Sau đó đưa `l2` tới góc mục tiêu
+
 Giới hạn hiện tại:
 
 - `l1`: `-0.4 -> 1.57` rad
 - `l2`: `-0.4 -> 1.57` rad
 
-Nhập `q` để thoát.
+Nhập:
+
+```text
+q
+```
+
+để thoát node.
+
+---
+
+## 6. Xem robot trong RViz
+
+Nếu muốn xem nhanh model trong RViz:
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch slam2robot display.launch.py
+```
+
+File RViz dùng chung hiện tại là:
+
+```bash
+rviz/robot.rviz
+```
+
+---
 
 ## 7. Chạy SLAM Cartographer 2D
 
 ### Cách 1: Chạy toàn bộ bằng một launch
 
 ```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 ros2 launch slam2robot cartographer.launch.py
 ```
 
 Launch này sẽ:
 
-- khởi động Gazebo
-- chạy `cartographer_node`
-- chạy `occupancy_grid_node`
-- mở RViz
+- Khởi động Gazebo
+- Chạy `cartographer_node`
+- Chạy `occupancy_grid_node`
+- Mở RViz
 
 ### Cách 2: Gazebo đã chạy sẵn
 
-Nếu bạn đã chạy:
+Nếu bạn đã chạy sẵn:
 
 ```bash
 ros2 launch slam2robot gazebo.launch.py
@@ -162,6 +231,9 @@ ros2 launch slam2robot gazebo.launch.py
 thì có thể chạy riêng Cartographer:
 
 ```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 ros2 launch slam2robot cartographer.launch.py start_gazebo:=false
 ```
 
@@ -174,33 +246,35 @@ ros2 launch slam2robot cartographer.launch.py start_gazebo:=false
 
 ### Lưu bản đồ sau khi quét xong
 
-Cartographer chỉ tạo bản đồ runtime. Nếu muốn lưu map để dùng tiếp với Nav2 hoặc map_server:
+Lưu map bằng lệnh trực tiếp:
 
 ```bash
 ros2 run nav2_map_server map_saver_cli -f ~/my_map
 ```
 
-Hoặc dùng launch đã bọc sẵn trong package:
+Hoặc dùng chính `cartographer.launch.py`:
 
 ```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 ros2 launch slam2robot cartographer.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true
 ```
 
 Lưu vào đường dẫn khác:
 
 ```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 ros2 launch slam2robot cartographer.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true map_file:=/tmp/my_map
 ```
 
-## 8. Xem robot trong RViz
+---
 
-Nếu chỉ muốn xem model:
+## 8. Topic hữu ích
 
-```bash
-ros2 launch slam2robot display.launch.py
-```
-
-## 9. Topic hữu ích
+Kiểm tra topic:
 
 ```bash
 ros2 topic list
@@ -217,7 +291,9 @@ Một số topic quan trọng:
 - `/imu`
 - `/map`
 
-## 10. Lệnh kiểm tra nhanh
+---
+
+## 9. Lệnh kiểm tra nhanh
 
 Kiểm tra controller:
 
@@ -225,7 +301,13 @@ Kiểm tra controller:
 ros2 control list_controllers
 ```
 
-Kiểm tra laser:
+Kiểm tra joint state:
+
+```bash
+ros2 topic echo /joint_states --once
+```
+
+Kiểm tra lidar:
 
 ```bash
 ros2 topic echo /scan --once
@@ -236,3 +318,78 @@ Kiểm tra TF:
 ```bash
 ros2 run tf2_tools view_frames
 ```
+
+---
+
+## 10. Thứ tự chạy đầy đủ
+
+### Mô phỏng + điều khiển tay máy
+
+**Terminal 1:**
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch slam2robot gazebo.launch.py
+```
+
+**Terminal 2:**
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch slam2robot display.launch.py
+```
+
+**Terminal 3:**
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
+**Terminal 4:**
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 run slam2robot arm_controller
+```
+
+### Chạy SLAM Cartographer 2D
+
+**Terminal 1:**
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch slam2robot cartographer.launch.py
+```
+
+**Terminal 2:**
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
+Di chuyển robot để quét bản đồ.
+
+**Terminal 3:**
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch slam2robot cartographer.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true map_file:=~/my_map
+```
+
+Lệnh ở `Terminal 3` dùng để lưu map sau khi quét xong.
