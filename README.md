@@ -1,4 +1,4 @@
-# 🤖 My Robot Description - ROS 2 Simulation Package
+# 🤖 SLAM2ROBOT - ROS 2 Simulation Package
 
 ![Ubuntu 22.04](https://img.shields.io/badge/Ubuntu-22.04-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
 ![ROS 2 Humble](https://img.shields.io/badge/ROS_2-Humble-34a853?style=for-the-badge&logo=ros&logoColor=white)
