@@ -29,7 +29,7 @@ def generate_launch_description():
         executable='rviz2',
         name='rviz2',
         output='screen',
-        arguments=['-d', os.path.join(pkg_share, 'rviz', 'sensor_view.rviz')] 
+        arguments=['-d', os.path.join(pkg_share, 'rviz', 'robot.rviz')]
     )
 
     return LaunchDescription([
