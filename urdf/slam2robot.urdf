@@ -28,8 +28,8 @@
 
   <link name="base_link">
     <inertial>
-      <origin xyz="0.00014506 0 0.0071913" rpy="0 0 0" />
-      <mass value="2.8289" />
+      <origin xyz="0.0023332 -1.2121E-07 0.016421" rpy="0 0 0" />
+      <mass value="3.7053" />
       <inertia ixx="0.010256" ixy="0" ixz="0" iyy="0.016675" iyz="0" izz="0.025413" />
     </inertial>
     <visual>
@@ -125,7 +125,7 @@
     <collision><geometry><mesh filename="package://slam2robot/meshes/link1.STL" /></geometry></collision>
   </link>
   <joint name="l1" type="revolute">
-    <origin xyz="0 0 0.075717" rpy="1.5708 -1.189 0" />
+    <origin xyz="0 0 0.10072" rpy="1.5708 -1.189 0" />
     <parent link="base_link" />
     <child link="link1" />
     <axis xyz="0 0 1" />
@@ -135,7 +135,7 @@
 
   <link name="link2">
     <inertial>
-      <origin xyz="0.12402 -0.00411 0" rpy="0 0 0" />
+      <origin xyz="0.12213 -0.00115 0" rpy="0 0 0" />
       <mass value="0.56752" />
       <inertia ixx="0.00030" ixy="0" ixz="0" iyy="0.00242" iyz="0" izz="0.00250" />
     </inertial>
@@ -153,44 +153,44 @@
 
   <link name="camera">
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0" /><mass value="0.073" />
+      <origin xyz="0 -3.086e-05 -0.000346" rpy="0 0 0" /><mass value="0.073" />
       <inertia ixx="8.20E-05" ixy="0" ixz="0" iyy="8.96E-06" iyz="0" izz="7.81E-05" />
     </inertial>
-    <visual><geometry><mesh filename="package://slam2robot/meshes/camera.STL" /></geometry><material name="white"/></visual>
-    <collision><geometry><mesh filename="package://slam2robot/meshes/camera.STL" /></geometry></collision>
+    <visual><origin xyz="0 0 0" rpy="0 0 1.5708" /><geometry><mesh filename="package://slam2robot/meshes/camera.STL" /></geometry><material name="white"/></visual>
+    <collision><origin xyz="0 0 0" rpy="0 0 1.5708" /><geometry><mesh filename="package://slam2robot/meshes/camera.STL" /></geometry></collision>
   </link>
   <joint name="cam_joint" type="fixed">
     <origin xyz="0.14207 0.046599 0" rpy="-1.5708 0 -1.6126" /><parent link="link2" /><child link="camera" />
   </joint>
   <link name="camera_optical"/>
   <joint name="camera_optical_joint" type="fixed">
-    <origin xyz="0 0 0" rpy=" 0 -1.5708 0" />
+    <origin xyz="0 0 0" rpy="0 -1.5708 0" />
     <parent link="camera" />
     <child link="camera_optical" />
   </joint>
 
   <link name="imu">
     <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0" /><mass value="0.025" />
+      <origin xyz="-0.00021152 9.4705E-05 0.0037659" rpy="0 0 0" /><mass value="0.025" />
       <inertia ixx="2.83E-06" ixy="0" ixz="0" iyy="6.05E-06" iyz="0" izz="7.62E-06" />
     </inertial>
     <visual><geometry><mesh filename="package://slam2robot/meshes/imu.STL" /></geometry><material name="blue"/></visual>
     <collision><geometry><mesh filename="package://slam2robot/meshes/imu.STL" /></geometry></collision>
   </link>
   <joint name="imu_joint" type="fixed">
-    <origin xyz="-0.090187 0 0.035717" rpy="0 0 0" /><parent link="base_link" /><child link="imu" />
+    <origin xyz="-0.073325 0 0.065717" rpy="0 0 0" /><parent link="base_link" /><child link="imu" />
   </joint>
 
   <link name="lidar">
     <inertial>
-      <origin xyz="0 0 0.01" rpy="0 0 0" /><mass value="0.05" />
+      <origin xyz="0 0 0.02" rpy="0 0 0" /><mass value="0.05" />
       <inertia ixx="9.89E-06" ixy="0" ixz="0" iyy="9.89E-06" iyz="0" izz="1.29E-05" />
     </inertial>
     <visual><origin xyz="0 0 -0.02" rpy="0 0 0" /><geometry><mesh filename="package://slam2robot/meshes/lidar.STL" /></geometry><material name="black"/></visual>
     <collision><origin xyz="0 0 -0.02" rpy="0 0 0" /><geometry><mesh filename="package://slam2robot/meshes/lidar.STL" /></geometry></collision>
   </link>
   <joint name="lidar_front_joint" type="fixed">
-    <origin xyz="0.090769 0 0.050717" rpy="0 0 0" /><parent link="base_link" /><child link="lidar" />
+    <origin xyz="0.15193 0 0.07717" rpy="0 0 0" /><parent link="base_link" /><child link="lidar" />
   </joint>
 
   <gazebo>
