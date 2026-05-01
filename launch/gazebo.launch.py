@@ -1,99 +1,264 @@
 import os
+
 import xacro
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, RegisterEventHandler, SetEnvironmentVariable
+from launch.actions import (
+    DeclareLaunchArgument,
+    GroupAction,
+    IncludeLaunchDescription,
+    LogInfo,
+    OpaqueFunction,
+    RegisterEventHandler,
+    SetEnvironmentVariable,
+)
+from launch.conditions import IfCondition
 from launch.event_handlers import OnProcessExit
-from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration, PythonExpression
+from launch_ros.actions import Node
 
-def generate_launch_description():
+
+VALID_WORLDS = {f'world_{index}': f'world_{index}.world' for index in range(1, 6)}
+VALID_SLAM = {'cartographer', 'gmapping'}
+
+
+def _launch_setup(context, *args, **kwargs):
     pkg_share = get_package_share_directory('slam2robot')
-    pkg_tb3_gazebo = get_package_share_directory('turtlebot3_gazebo')
-    world_path = os.path.join(pkg_tb3_gazebo, 'worlds', 'turtlebot3_world.world')
-    workspace_models_path = os.path.join(pkg_share, '..')
+    pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
+    selected_world = LaunchConfiguration('world').perform(context)
+    selected_slam = LaunchConfiguration('slam').perform(context)
+
+    if selected_world not in VALID_WORLDS:
+        raise RuntimeError(
+            f"Invalid world '{selected_world}'. Valid options: {', '.join(VALID_WORLDS)}"
+        )
+
+    if selected_slam not in VALID_SLAM:
+        raise RuntimeError(
+            f"Invalid slam '{selected_slam}'. Valid options: {', '.join(sorted(VALID_SLAM))}"
+        )
+
+    world_path = os.path.join(pkg_share, 'world', VALID_WORLDS[selected_world])
+    workspace_models_path = os.path.join(pkg_share, '..')
     controller_config_file = os.path.join(pkg_share, 'config', 'controllers.yaml')
+    cartographer_config_dir = os.path.join(pkg_share, 'config')
     xacro_file = os.path.join(pkg_share, 'urdf', 'slam2robot.urdf')
+
     robot_desc = xacro.process_file(xacro_file).toxml().replace(
-        "__CONTROLLER_CONFIG_FILE__",
+        '__CONTROLLER_CONFIG_FILE__',
         controller_config_file,
     )
 
     set_gazebo_model_path = SetEnvironmentVariable(
         name='GAZEBO_MODEL_PATH',
         value=[
-            os.environ.get('GAZEBO_MODEL_PATH', ''), 
-            ':', workspace_models_path,
-            ':', os.path.join(pkg_tb3_gazebo, 'models')
-        ]
+            os.environ.get('GAZEBO_MODEL_PATH', ''),
+            ':',
+            workspace_models_path,
+        ],
     )
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{'robot_description': robot_desc, 'use_sim_time': True}]
+        parameters=[
+            {
+                'robot_description': robot_desc,
+                'use_sim_time': LaunchConfiguration('use_sim_time'),
+            }
+        ],
     )
 
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')
+            os.path.join(pkg_gazebo_ros, 'launch', 'gazebo.launch.py')
         ),
-        launch_arguments={'world': world_path}.items()
+        launch_arguments={'world': world_path}.items(),
+        condition=IfCondition(LaunchConfiguration('start_gazebo')),
     )
 
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
         arguments=[
-            '-topic', 'robot_description', 
-            '-entity', 'my_robot',
-            '-x', '-2.0', '-y', '-0.5', '-z', '0.01'
+            '-topic',
+            'robot_description',
+            '-entity',
+            'my_robot',
+            '-x',
+            LaunchConfiguration('spawn_x'),
+            '-y',
+            LaunchConfiguration('spawn_y'),
+            '-z',
+            LaunchConfiguration('spawn_z'),
         ],
-        output='screen'
+        output='screen',
     )
 
     joint_state_broadcaster_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
+        package='controller_manager',
+        executable='spawner',
         arguments=[
-            "joint_state_broadcaster",
-            "-c", "/controller_manager",
-            "--param-file", controller_config_file,
+            'joint_state_broadcaster',
+            '-c',
+            '/controller_manager',
+            '--param-file',
+            controller_config_file,
         ],
-        output='screen'
+        output='screen',
     )
 
     joint_position_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
+        package='controller_manager',
+        executable='spawner',
         arguments=[
-            "joint_position_controller",
-            "-c", "/controller_manager",
-            "--param-file", controller_config_file,
+            'joint_position_controller',
+            '-c',
+            '/controller_manager',
+            '--param-file',
+            controller_config_file,
         ],
-        output='screen'
+        output='screen',
     )
 
-    load_joint_state_broadcaster = RegisterEventHandler(
-        OnProcessExit(
-            target_action=spawn_entity,
-            on_exit=[joint_state_broadcaster_spawner],
-        )
+    gazebo_group = GroupAction(
+        condition=IfCondition(LaunchConfiguration('start_gazebo')),
+        actions=[
+            gazebo,
+            spawn_entity,
+            RegisterEventHandler(
+                OnProcessExit(
+                    target_action=spawn_entity,
+                    on_exit=[joint_state_broadcaster_spawner],
+                )
+            ),
+            RegisterEventHandler(
+                OnProcessExit(
+                    target_action=joint_state_broadcaster_spawner,
+                    on_exit=[joint_position_controller_spawner],
+                )
+            ),
+        ],
     )
 
-    load_joint_position_controller = RegisterEventHandler(
-        OnProcessExit(
-            target_action=joint_state_broadcaster_spawner,
-            on_exit=[joint_position_controller_spawner],
-        )
+    slam_is_cartographer = PythonExpression(
+        ["'", LaunchConfiguration('slam'), "' == 'cartographer'"]
+    )
+    slam_is_gmapping = PythonExpression(
+        ["'", LaunchConfiguration('slam'), "' == 'gmapping'"]
+    )
+    cartographer_node = Node(
+        package='cartographer_ros',
+        executable='cartographer_node',
+        name='cartographer_node',
+        output='screen',
+        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
+        arguments=[
+            '-configuration_directory',
+            cartographer_config_dir,
+            '-configuration_basename',
+            'cartographer_2d.lua',
+        ],
+        remappings=[('scan', '/scan')],
+        condition=IfCondition(slam_is_cartographer),
     )
 
-    return LaunchDescription([
+    occupancy_grid_node = Node(
+        package='cartographer_ros',
+        executable='occupancy_grid_node',
+        name='occupancy_grid_node',
+        output='screen',
+        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
+        arguments=['-resolution', '0.05', '-publish_period_sec', '1.0'],
+        condition=IfCondition(slam_is_cartographer),
+    )
+
+    gmapping_node = Node(
+        package='slam_gmapping',
+        executable='slam_gmapping',
+        name='slam_gmapping',
+        output='screen',
+        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
+        remappings=[('scan', '/scan')],
+        condition=IfCondition(slam_is_gmapping),
+    )
+
+    rviz2_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        output='screen',
+        arguments=['-d', os.path.join(pkg_share, 'rviz', 'robot.rviz')],
+        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
+        condition=IfCondition(LaunchConfiguration('start_rviz')),
+    )
+
+    save_map_log = LogInfo(
+        msg=['Saving map to: ', LaunchConfiguration('map_file')],
+        condition=IfCondition(LaunchConfiguration('save_map')),
+    )
+
+    save_map_node = Node(
+        package='nav2_map_server',
+        executable='map_saver_cli',
+        name='map_saver_cli',
+        output='screen',
+        arguments=[
+            '-f',
+            LaunchConfiguration('map_file'),
+            '--free',
+            LaunchConfiguration('free_thresh'),
+            '--occ',
+            LaunchConfiguration('occupied_thresh'),
+        ],
+        condition=IfCondition(LaunchConfiguration('save_map')),
+    )
+
+    world_log = LogInfo(msg=[f'Launching Gazebo world: {selected_world} -> {world_path}'])
+    slam_log = LogInfo(msg=[f'Using SLAM algorithm: {selected_slam}'])
+    slam_group = GroupAction(
+        condition=IfCondition(LaunchConfiguration('start_slam')),
+        actions=[
+            cartographer_node,
+            occupancy_grid_node,
+            gmapping_node,
+        ],
+    )
+
+    return [
         set_gazebo_model_path,
+        world_log,
+        slam_log,
         robot_state_publisher,
-        gazebo,
-        spawn_entity,
-        load_joint_state_broadcaster,
-        load_joint_position_controller,
-    ])
+        gazebo_group,
+        slam_group,
+        rviz2_node,
+        save_map_log,
+        save_map_node,
+    ]
+
+
+def generate_launch_description():
+    pkg_share = get_package_share_directory('slam2robot')
+    default_map_dir = os.path.join(pkg_share, 'maps', 'slam_map')
+
+    return LaunchDescription(
+        [
+            DeclareLaunchArgument('use_sim_time', default_value='true'),
+            DeclareLaunchArgument('start_gazebo', default_value='true'),
+            DeclareLaunchArgument('start_slam', default_value='true'),
+            DeclareLaunchArgument('start_rviz', default_value='true'),
+            DeclareLaunchArgument('save_map', default_value='false'),
+            DeclareLaunchArgument('world', default_value='world_1'),
+            DeclareLaunchArgument('slam', default_value='cartographer'),
+            DeclareLaunchArgument('map_file', default_value=default_map_dir),
+            DeclareLaunchArgument('free_thresh', default_value='0.25'),
+            DeclareLaunchArgument('occupied_thresh', default_value='0.65'),
+            DeclareLaunchArgument('spawn_x', default_value='-2.0'),
+            DeclareLaunchArgument('spawn_y', default_value='-0.5'),
+            DeclareLaunchArgument('spawn_z', default_value='0.01'),
+            OpaqueFunction(function=_launch_setup),
+        ]
+    )

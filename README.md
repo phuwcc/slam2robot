@@ -63,6 +63,7 @@ sudo apt install -y \
   ros-humble-teleop-twist-keyboard \
   ros-humble-cartographer \
   ros-humble-cartographer-ros \
+  ros-humble-slam-gmapping \
   ros-humble-nav2-map-server
 ```
 
@@ -98,16 +99,23 @@ source install/setup.bash
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot gazebo.launch.py
+ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
 ```
 
 Launch này sẽ:
 
 - Nạp `robot_description`
-- Mở Gazebo với `turtlebot3_world`
+- Mở Gazebo với một trong 5 world: `world_1` ... `world_5`
 - Spawn robot vào môi trường
 - Khởi tạo `joint_state_broadcaster`
 - Khởi tạo `joint_position_controller` cho cánh tay
+- Chạy một trong 2 thuật toán SLAM: `cartographer` hoặc `gmapping`
+
+Ví dụ:
+
+```bash
+ros2 launch slam2robot gazebo.launch.py world:=world_3 slam:=gmapping
+```
 
 ## 4. Điều khiển robot di chuyển bằng bàn phím
 
@@ -210,22 +218,17 @@ rviz/robot.rviz
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot cartographer.launch.py
+ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
 ```
 
-Launch này sẽ:
-
-- Khởi động Gazebo
-- Chạy `cartographer_node`
-- Chạy `occupancy_grid_node`
-- Mở RViz
+Launch này sẽ khởi động Gazebo, chạy Cartographer và mở RViz.
 
 ### Cách 2: Gazebo đã chạy sẵn
 
 Nếu bạn đã chạy sẵn:
 
 ```bash
-ros2 launch slam2robot gazebo.launch.py
+ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
 ```
 
 thì có thể chạy riêng Cartographer:
@@ -234,7 +237,7 @@ thì có thể chạy riêng Cartographer:
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot cartographer.launch.py start_gazebo:=false
+ros2 launch slam2robot gazebo.launch.py start_gazebo:=false world:=world_1 slam:=cartographer
 ```
 
 ### Topic và frame dùng cho SLAM
