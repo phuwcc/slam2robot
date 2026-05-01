@@ -80,6 +80,7 @@ cd ~/ros2_ws/src
 
 ```bash
 cd ~/ros2_ws
+rm -rf build install log
 source /opt/ros/humble/setup.bash
 colcon build --packages-select slam2robot
 source install/setup.bash
