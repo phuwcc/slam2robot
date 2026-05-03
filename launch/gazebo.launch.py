@@ -235,16 +235,6 @@ def _launch_setup(context, *args, **kwargs):
         condition=IfCondition(slam_is_gmapping),
     )
 
-    rviz2_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        name='rviz2',
-        output='screen',
-        arguments=['-d', os.path.join(pkg_share, 'rviz', 'robot.rviz')],
-        parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}],
-        condition=IfCondition(LaunchConfiguration('start_rviz')),
-    )
-
     reference_map_actions = []
     if selected_map_path is not None:
         reference_map_actions.extend(
@@ -321,7 +311,6 @@ def _launch_setup(context, *args, **kwargs):
         gazebo_group,
         slam_group,
         *reference_map_actions,
-        rviz2_node,
         save_map_log,
         save_map_node,
     ]
@@ -336,7 +325,6 @@ def generate_launch_description():
             DeclareLaunchArgument('use_sim_time', default_value='true'),
             DeclareLaunchArgument('start_gazebo', default_value='true'),
             DeclareLaunchArgument('start_slam', default_value='true'),
-            DeclareLaunchArgument('start_rviz', default_value='true'),
             DeclareLaunchArgument('save_map', default_value='true'),
             DeclareLaunchArgument('world', default_value='world_1'),
             DeclareLaunchArgument('slam', default_value='cartographer'),

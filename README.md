@@ -114,6 +114,7 @@ Launch này sẽ:
 - Khởi tạo `joint_state_broadcaster`
 - Khởi tạo `joint_position_controller` cho cánh tay
 - Chạy một trong 2 thuật toán SLAM: `cartographer` hoặc `gmapping`
+- Không mở RViz
 
 Ví dụ:
 
@@ -121,7 +122,7 @@ Ví dụ:
 ros2 launch slam2robot gazebo.launch.py world:=world_3 slam:=gmapping
 ```
 
-Nếu muốn nạp sẵn một map tham chiếu trong thư mục `map/` và vẫn chạy SLAM để so sánh trực tiếp trong RViz:
+Nếu muốn nạp sẵn một map tham chiếu trong thư mục `map/` và vẫn chạy SLAM:
 
 ```bash
 ros2 launch slam2robot gazebo.launch.py \
@@ -137,10 +138,20 @@ ros2 launch slam2robot gazebo.launch.py \
 - `slam:=cartographer` hoặc `slam:=gmapping`: chọn thuật toán SLAM
 - `map_file:=warehouse_scan`: lưu ra `share/slam2robot/map/warehouse_scan.yaml` và `.pgm`
 
-RViz sau khi sửa sẽ hiển thị:
+Để xem trên RViz, mở terminal khác và chạy:
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch slam2robot display.launch.py use_sim_time:=true start_joint_state_publisher_gui:=false
+```
+
+RViz sẽ hiển thị:
 
 - `Reference Map`: map đã chọn
 - `SLAM Map`: map robot đang quét realtime
+- Robot và các frame TF
 
 ## 4. Điều khiển robot di chuyển bằng bàn phím
 
