@@ -1,0 +1,124 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <world name="cluttered_loop_closure_world">
+    
+    <include><uri>model://sun</uri></include>
+    <include><uri>model://ground_plane</uri></include>
+
+    <!-- HÀNH LANG VÒNG LẶP KÍN (20x20m vòng ngoài, 14x14m vòng trong) -->
+    <model name="loop_corridor">
+      <static>true</static>
+      <link name="walls">
+        <collision name="out_n"><pose>0 10 1.25 0 0 0</pose><geometry><box><size>20 0.2 2.5</size></box></geometry></collision>
+        <visual name="out_n_v"><pose>0 10 1.25 0 0 0</pose><geometry><box><size>20 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+        
+        <collision name="out_s"><pose>0 -10 1.25 0 0 0</pose><geometry><box><size>20 0.2 2.5</size></box></geometry></collision>
+        <visual name="out_s_v"><pose>0 -10 1.25 0 0 0</pose><geometry><box><size>20 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="out_e"><pose>10 0 1.25 0 0 0</pose><geometry><box><size>0.2 20.4 2.5</size></box></geometry></collision>
+        <visual name="out_e_v"><pose>10 0 1.25 0 0 0</pose><geometry><box><size>0.2 20.4 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="out_w"><pose>-10 0 1.25 0 0 0</pose><geometry><box><size>0.2 20.4 2.5</size></box></geometry></collision>
+        <visual name="out_w_v"><pose>-10 0 1.25 0 0 0</pose><geometry><box><size>0.2 20.4 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="in_n"><pose>0 7 1.25 0 0 0</pose><geometry><box><size>14 0.2 2.5</size></box></geometry></collision>
+        <visual name="in_n_v"><pose>0 7 1.25 0 0 0</pose><geometry><box><size>14 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="in_s"><pose>0 -7 1.25 0 0 0</pose><geometry><box><size>14 0.2 2.5</size></box></geometry></collision>
+        <visual name="in_s_v"><pose>0 -7 1.25 0 0 0</pose><geometry><box><size>14 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="in_e"><pose>7 0 1.25 0 0 0</pose><geometry><box><size>0.2 14.4 2.5</size></box></geometry></collision>
+        <visual name="in_e_v"><pose>7 0 1.25 0 0 0</pose><geometry><box><size>0.2 14.4 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="in_w"><pose>-7 0 1.25 0 0 0</pose><geometry><box><size>0.2 14.4 2.5</size></box></geometry></collision>
+        <visual name="in_w_v"><pose>-7 0 1.25 0 0 0</pose><geometry><box><size>0.2 14.4 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+      </link>
+    </model>
+
+    <!-- MỚI: BÃI VẬT CẢN DÀY ĐẶC (CLUTTER) -->
+    <model name="heavy_clutter">
+      <static>true</static>
+      <link name="objects">
+        
+        <!-- ================= HÀNH LANG PHÍA NAM (Khởi đầu) ================= -->
+        <!-- Robot thường bắt đầu ở (0, -8.5). Gắn cụm đặc trưng ở đây để dễ nhận diện khi về đích -->
+        <visual name="start_mark1"><pose>1.5 -9.2 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Red</name></script></material></visual>
+        <collision name="start_c1"><pose>1.5 -9.2 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry></collision>
+        
+        <visual name="start_mark2"><pose>-1.5 -7.8 0.5 0 0 0</pose><geometry><cylinder><radius>0.4</radius><length>1.0</length></cylinder></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Blue</name></script></material></visual>
+        <collision name="start_c2"><pose>-1.5 -7.8 0.5 0 0 0</pose><geometry><cylinder><radius>0.4</radius><length>1.0</length></cylinder></geometry></collision>
+
+        <visual name="s1"><pose>4 -8.5 0.5 0 0 0</pose><geometry><sphere><radius>0.5</radius></sphere></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Yellow</name></script></material></visual>
+        <collision name="sc1"><pose>4 -8.5 0.5 0 0 0</pose><geometry><sphere><radius>0.5</radius></sphere></geometry></collision>
+
+        <visual name="s2"><pose>6.5 -7.5 0.5 0 0 0</pose><geometry><box><size>1.0 0.5 1.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Wood</name></script></material></visual>
+        <collision name="sc2"><pose>6.5 -7.5 0.5 0 0 0</pose><geometry><box><size>1.0 0.5 1.0</size></box></geometry></collision>
+
+        <visual name="s3"><pose>-4.5 -9.0 0.5 0 0 0</pose><geometry><cylinder><radius>0.2</radius><length>1.0</length></cylinder></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/White</name></script></material></visual>
+        <collision name="sc3"><pose>-4.5 -9.0 0.5 0 0 0</pose><geometry><cylinder><radius>0.2</radius><length>1.0</length></cylinder></geometry></collision>
+
+        <!-- ================= GÓC CUA ĐÔNG NAM (Ép lượn) ================= -->
+        <visual name="se_corner"><pose>8.5 -8.5 0.6 0 0 0</pose><geometry><cylinder><radius>0.6</radius><length>1.2</length></cylinder></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Orange</name></script></material></visual>
+        <collision name="sec_corner"><pose>8.5 -8.5 0.6 0 0 0</pose><geometry><cylinder><radius>0.6</radius><length>1.2</length></cylinder></geometry></collision>
+
+        <!-- ================= HÀNH LANG PHÍA ĐÔNG (Rừng cột nhỏ) ================= -->
+        <!-- Các cột trụ nhỏ xếp sole gây khó cho LiDAR -->
+        <visual name="e1"><pose>7.8 -4 0.5 0 0 0</pose><geometry><cylinder><radius>0.15</radius><length>1.0</length></cylinder></geometry></visual>
+        <collision name="ec1"><pose>7.8 -4 0.5 0 0 0</pose><geometry><cylinder><radius>0.15</radius><length>1.0</length></cylinder></geometry></collision>
+        
+        <visual name="e2"><pose>9.2 -1 0.5 0 0 0</pose><geometry><cylinder><radius>0.15</radius><length>1.0</length></cylinder></geometry></visual>
+        <collision name="ec2"><pose>9.2 -1 0.5 0 0 0</pose><geometry><cylinder><radius>0.15</radius><length>1.0</length></cylinder></geometry></collision>
+
+        <visual name="e3"><pose>7.8 2 0.5 0 0 0</pose><geometry><cylinder><radius>0.15</radius><length>1.0</length></cylinder></geometry></visual>
+        <collision name="ec3"><pose>7.8 2 0.5 0 0 0</pose><geometry><cylinder><radius>0.15</radius><length>1.0</length></cylinder></geometry></collision>
+
+        <visual name="e4"><pose>8.5 5 0.4 0 0 0</pose><geometry><box><size>1.2 1.2 0.8</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Green</name></script></material></visual>
+        <collision name="ec4"><pose>8.5 5 0.4 0 0 0</pose><geometry><box><size>1.2 1.2 0.8</size></box></geometry></collision>
+
+        <!-- ================= GÓC CUA ĐÔNG BẮC ================= -->
+        <visual name="ne_corner"><pose>7.5 7.5 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry></visual>
+        <collision name="nec_corner"><pose>7.5 7.5 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry></collision>
+
+        <!-- ================= HÀNH LANG PHÍA BẮC (Chướng ngại vật ngẫu nhiên) ================= -->
+        <visual name="n1"><pose>4 8.5 0.4 0 0 0</pose><geometry><sphere><radius>0.4</radius></sphere></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Purple</name></script></material></visual>
+        <collision name="nc1"><pose>4 8.5 0.4 0 0 0</pose><geometry><sphere><radius>0.4</radius></sphere></geometry></collision>
+
+        <visual name="n2"><pose>1 9.2 0.5 0 0 0</pose><geometry><box><size>0.6 1.0 1.0</size></box></geometry></visual>
+        <collision name="nc2"><pose>1 9.2 0.5 0 0 0</pose><geometry><box><size>0.6 1.0 1.0</size></box></geometry></collision>
+
+        <visual name="n3"><pose>-2 7.8 0.5 0 0 0</pose><geometry><box><size>1.0 0.6 1.0</size></box></geometry></visual>
+        <collision name="nc3"><pose>-2 7.8 0.5 0 0 0</pose><geometry><box><size>1.0 0.6 1.0</size></box></geometry></collision>
+
+        <visual name="n4"><pose>-6 8.5 0.6 0 0 0</pose><geometry><cylinder><radius>0.5</radius><length>1.2</length></cylinder></geometry></visual>
+        <collision name="nc4"><pose>-6 8.5 0.6 0 0 0</pose><geometry><cylinder><radius>0.5</radius><length>1.2</length></cylinder></geometry></collision>
+
+        <!-- ================= GÓC CUA TÂY BẮC ================= -->
+        <visual name="nw_corner1"><pose>-8.5 9.0 0.5 0 0 0</pose><geometry><cylinder><radius>0.3</radius><length>1.0</length></cylinder></geometry></visual>
+        <collision name="nwc_corner1"><pose>-8.5 9.0 0.5 0 0 0</pose><geometry><cylinder><radius>0.3</radius><length>1.0</length></cylinder></geometry></collision>
+        
+        <visual name="nw_corner2"><pose>-9.0 8.5 0.5 0 0 0</pose><geometry><cylinder><radius>0.3</radius><length>1.0</length></cylinder></geometry></visual>
+        <collision name="nwc_corner2"><pose>-9.0 8.5 0.5 0 0 0</pose><geometry><cylinder><radius>0.3</radius><length>1.0</length></cylinder></geometry></collision>
+
+        <!-- ================= HÀNH LANG PHÍA TÂY (Zig-zag) ================= -->
+        <!-- Đặt so le để robot phải đi lượn vòng -->
+        <visual name="w1"><pose>-7.5 5 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Turquoise</name></script></material></visual>
+        <collision name="wc1"><pose>-7.5 5 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry></collision>
+
+        <visual name="w2"><pose>-9.2 1 0.5 0 0 0</pose><geometry><box><size>1.0 0.5 1.0</size></box></geometry></visual>
+        <collision name="wc2"><pose>-9.2 1 0.5 0 0 0</pose><geometry><box><size>1.0 0.5 1.0</size></box></geometry></collision>
+
+        <visual name="w3"><pose>-7.8 -2 0.5 0 0 0</pose><geometry><cylinder><radius>0.4</radius><length>1.0</length></cylinder></geometry></visual>
+        <collision name="wc3"><pose>-7.8 -2 0.5 0 0 0</pose><geometry><cylinder><radius>0.4</radius><length>1.0</length></cylinder></geometry></collision>
+
+        <visual name="w4"><pose>-9.0 -5 0.5 0 0 0</pose><geometry><sphere><radius>0.6</radius></sphere></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Black</name></script></material></visual>
+        <collision name="wc4"><pose>-9.0 -5 0.5 0 0 0</pose><geometry><sphere><radius>0.6</radius></sphere></geometry></collision>
+
+        <!-- ================= GÓC CUA TÂY NAM (Về đích) ================= -->
+        <visual name="sw_corner"><pose>-8.5 -7.5 0.5 0 0 0</pose><geometry><box><size>0.6 0.6 1.0</size></box></geometry></visual>
+        <collision name="swc_corner"><pose>-8.5 -7.5 0.5 0 0 0</pose><geometry><box><size>0.6 0.6 1.0</size></box></geometry></collision>
+
+      </link>
+    </model>
+
+  </world>
+</sdf>

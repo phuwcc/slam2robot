@@ -1,0 +1,119 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <world name="perfect_symmetric_world">
+    
+    <include><uri>model://sun</uri></include>
+    <include><uri>model://ground_plane</uri></include>
+
+    <!-- ============================================ -->
+    <!-- KHUNG HÀNH LANG CHỮ "H" (Không thay đổi)     -->
+    <!-- ============================================ -->
+    <model name="h_shape_corridors">
+      <static>true</static>
+      <link name="walls">
+        <!-- HÀNH LANG BẮC (Tâm Y = 5.0, Khoảng trống từ Y=3.6 đến Y=6.4) -->
+        <collision name="top_north"><pose>0 6.5 1.25 0 0 0</pose><geometry><box><size>30 0.2 2.5</size></box></geometry></collision>
+        <visual name="top_north_v"><pose>0 6.5 1.25 0 0 0</pose><geometry><box><size>30 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+        
+        <collision name="top_south_l"><pose>-8.25 3.5 1.25 0 0 0</pose><geometry><box><size>13.5 0.2 2.5</size></box></geometry></collision>
+        <visual name="top_south_l_v"><pose>-8.25 3.5 1.25 0 0 0</pose><geometry><box><size>13.5 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="top_south_r"><pose>8.25 3.5 1.25 0 0 0</pose><geometry><box><size>13.5 0.2 2.5</size></box></geometry></collision>
+        <visual name="top_south_r_v"><pose>8.25 3.5 1.25 0 0 0</pose><geometry><box><size>13.5 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <!-- HÀNH LANG NAM (Tâm Y = -5.0, Khoảng trống từ Y=-6.4 đến Y=-3.6) -->
+        <collision name="bot_north_l"><pose>-8.25 -3.5 1.25 0 0 0</pose><geometry><box><size>13.5 0.2 2.5</size></box></geometry></collision>
+        <visual name="bot_north_l_v"><pose>-8.25 -3.5 1.25 0 0 0</pose><geometry><box><size>13.5 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="bot_north_r"><pose>8.25 -3.5 1.25 0 0 0</pose><geometry><box><size>13.5 0.2 2.5</size></box></geometry></collision>
+        <visual name="bot_north_r_v"><pose>8.25 -3.5 1.25 0 0 0</pose><geometry><box><size>13.5 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="bot_south"><pose>0 -6.5 1.25 0 0 0</pose><geometry><box><size>30 0.2 2.5</size></box></geometry></collision>
+        <visual name="bot_south_v"><pose>0 -6.5 1.25 0 0 0</pose><geometry><box><size>30 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <!-- BỨC TƯỜNG CHẮN 2 ĐẦU VÀ ĐƯỜNG HẦM -->
+        <collision name="far_west"><pose>-15 0 1.25 0 0 0</pose><geometry><box><size>0.2 13.2 2.5</size></box></geometry></collision>
+        <visual name="far_west_v"><pose>-15 0 1.25 0 0 0</pose><geometry><box><size>0.2 13.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="far_east"><pose>15 0 1.25 0 0 0</pose><geometry><box><size>0.2 13.2 2.5</size></box></geometry></collision>
+        <visual name="far_east_v"><pose>15 0 1.25 0 0 0</pose><geometry><box><size>0.2 13.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="tunnel_west"><pose>-1.5 0 1.25 0 0 0</pose><geometry><box><size>0.2 7 2.5</size></box></geometry></collision>
+        <visual name="tunnel_west_v"><pose>-1.5 0 1.25 0 0 0</pose><geometry><box><size>0.2 7 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="tunnel_east"><pose>1.5 0 1.25 0 0 0</pose><geometry><box><size>0.2 7 2.5</size></box></geometry></collision>
+        <visual name="tunnel_east_v"><pose>1.5 0 1.25 0 0 0</pose><geometry><box><size>0.2 7 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+      </link>
+    </model>
+
+    <!-- ============================================ -->
+    <!-- ĐẶC TRƯNG GÂY NHIỄU (ĐÃ FIX LỖI TỌA ĐỘ)        -->
+    <!-- ============================================ -->
+    <model name="identical_features">
+      <static>true</static>
+      <link name="features">
+        
+        <!-- ================= HÀNH LANG BẮC (TOP) ================= -->
+        <!-- Tâm Y = 5.0. Bên trái: Y = 6.0, Bên phải: Y = 4.0 -->
+        
+        <!-- Mốc -12m: Cửa gỗ áp sát tường bên trái -->
+        <visual name="t_door1"><pose>-12 6.35 1.0 0 0 0</pose><geometry><box><size>1.0 0.1 2.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Wood</name></script></material></visual>
+        <collision name="tc_door1"><pose>-12 6.35 1.0 0 0 0</pose><geometry><box><size>1.0 0.1 2.0</size></box></geometry></collision>
+        
+        <!-- Mốc -8m: Hộp xanh dương nằm sát bên phải -->
+        <visual name="t_box1"><pose>-8 4.0 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Blue</name></script></material></visual>
+        <collision name="tc_box1"><pose>-8 4.0 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry></collision>
+
+        <!-- Mốc -4m: Trụ xanh lá nằm chính giữa lối đi -->
+        <visual name="t_cyl1"><pose>-4 5.0 0.5 0 0 0</pose><geometry><cylinder><radius>0.4</radius><length>1.0</length></cylinder></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Green</name></script></material></visual>
+        <collision name="tc_cyl1"><pose>-4 5.0 0.5 0 0 0</pose><geometry><cylinder><radius>0.4</radius><length>1.0</length></cylinder></geometry></collision>
+
+        <!-- === Qua khỏi đường hầm === -->
+
+        <!-- Mốc +4m: Khối cầu đỏ nằm sát bên trái -->
+        <visual name="t_sph1"><pose>4 6.0 0.4 0 0 0</pose><geometry><sphere><radius>0.4</radius></sphere></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Red</name></script></material></visual>
+        <collision name="tc_sph1"><pose>4 6.0 0.4 0 0 0</pose><geometry><sphere><radius>0.4</radius></sphere></geometry></collision>
+
+        <!-- Mốc +8m: Hộp màu vàng nằm sát bên phải -->
+        <visual name="t_box2"><pose>8 4.0 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Yellow</name></script></material></visual>
+        <collision name="tc_box2"><pose>8 4.0 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry></collision>
+
+        <!-- Mốc +12m: Cửa gỗ áp sát tường bên phải -->
+        <visual name="t_door2"><pose>12 3.65 1.0 0 0 0</pose><geometry><box><size>1.0 0.1 2.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Wood</name></script></material></visual>
+        <collision name="tc_door2"><pose>12 3.65 1.0 0 0 0</pose><geometry><box><size>1.0 0.1 2.0</size></box></geometry></collision>
+
+
+        <!-- ================= HÀNH LANG NAM (BOTTOM) ================= -->
+        <!-- Tâm Y = -5.0. Bên trái: Y = -4.0, Bên phải: Y = -6.0 -->
+        
+        <!-- Mốc -12m: Cửa gỗ áp sát tường bên trái -->
+        <visual name="b_door1"><pose>-12 -3.65 1.0 0 0 0</pose><geometry><box><size>1.0 0.1 2.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Wood</name></script></material></visual>
+        <collision name="bc_door1"><pose>-12 -3.65 1.0 0 0 0</pose><geometry><box><size>1.0 0.1 2.0</size></box></geometry></collision>
+        
+        <!-- Mốc -8m: Hộp xanh dương nằm sát bên phải -->
+        <visual name="b_box1"><pose>-8 -6.0 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Blue</name></script></material></visual>
+        <collision name="bc_box1"><pose>-8 -6.0 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry></collision>
+
+        <!-- Mốc -4m: Trụ xanh lá nằm chính giữa lối đi -->
+        <visual name="b_cyl1"><pose>-4 -5.0 0.5 0 0 0</pose><geometry><cylinder><radius>0.4</radius><length>1.0</length></cylinder></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Green</name></script></material></visual>
+        <collision name="bc_cyl1"><pose>-4 -5.0 0.5 0 0 0</pose><geometry><cylinder><radius>0.4</radius><length>1.0</length></cylinder></geometry></collision>
+
+        <!-- === Qua khỏi đường hầm === -->
+
+        <!-- Mốc +4m: Khối cầu đỏ nằm sát bên trái -->
+        <visual name="b_sph1"><pose>4 -4.0 0.4 0 0 0</pose><geometry><sphere><radius>0.4</radius></sphere></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Red</name></script></material></visual>
+        <collision name="bc_sph1"><pose>4 -4.0 0.4 0 0 0</pose><geometry><sphere><radius>0.4</radius></sphere></geometry></collision>
+
+        <!-- Mốc +8m: Hộp màu vàng nằm sát bên phải -->
+        <visual name="b_box2"><pose>8 -6.0 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Yellow</name></script></material></visual>
+        <collision name="bc_box2"><pose>8 -6.0 0.5 0 0 0</pose><geometry><box><size>0.8 0.8 1.0</size></box></geometry></collision>
+
+        <!-- Mốc +12m: Cửa gỗ áp sát tường bên phải -->
+        <visual name="b_door2"><pose>12 -6.35 1.0 0 0 0</pose><geometry><box><size>1.0 0.1 2.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Wood</name></script></material></visual>
+        <collision name="bc_door2"><pose>12 -6.35 1.0 0 0 0</pose><geometry><box><size>1.0 0.1 2.0</size></box></geometry></collision>
+
+      </link>
+    </model>
+
+  </world>
+</sdf>

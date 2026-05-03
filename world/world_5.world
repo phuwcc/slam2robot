@@ -1,0 +1,100 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <world name="semi_open_space_world">
+    
+    <include><uri>model://sun</uri></include>
+    <include><uri>model://ground_plane</uri></include>
+
+    <!-- ============================================ -->
+    <!-- BỨC TƯỜNG BAO BỊ ĐỨT ĐOẠN (KHU VỰC 40x40m)    -->
+    <!-- ============================================ -->
+    <model name="broken_walls">
+      <static>true</static>
+      <link name="walls">
+        
+        <!-- TƯỜNG BẮC (Y = 20): Thủng một mảng lớn 10m ở giữa -->
+        <collision name="n_wall_1"><pose>-12.5 20 1.25 0 0 0</pose><geometry><box><size>15 0.2 2.5</size></box></geometry></collision>
+        <visual name="n_wall_1_v"><pose>-12.5 20 1.25 0 0 0</pose><geometry><box><size>15 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+        
+        <collision name="n_wall_2"><pose>12.5 20 1.25 0 0 0</pose><geometry><box><size>15 0.2 2.5</size></box></geometry></collision>
+        <visual name="n_wall_2_v"><pose>12.5 20 1.25 0 0 0</pose><geometry><box><size>15 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <!-- TƯỜNG NAM (Y = -20): Thủng một mảng 10m ở giữa -->
+        <collision name="s_wall_1"><pose>-12.5 -20 1.25 0 0 0</pose><geometry><box><size>15 0.2 2.5</size></box></geometry></collision>
+        <visual name="s_wall_1_v"><pose>-12.5 -20 1.25 0 0 0</pose><geometry><box><size>15 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="s_wall_2"><pose>12.5 -20 1.25 0 0 0</pose><geometry><box><size>15 0.2 2.5</size></box></geometry></collision>
+        <visual name="s_wall_2_v"><pose>12.5 -20 1.25 0 0 0</pose><geometry><box><size>15 0.2 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <!-- TƯỜNG ĐÔNG (X = 20): Bị xé làm 3 đoạn (2 chỗ hổng) -->
+        <collision name="e_wall_1"><pose>20 15 1.25 0 0 0</pose><geometry><box><size>0.2 10 2.5</size></box></geometry></collision>
+        <visual name="e_wall_1_v"><pose>20 15 1.25 0 0 0</pose><geometry><box><size>0.2 10 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="e_wall_2"><pose>20 0 1.25 0 0 0</pose><geometry><box><size>0.2 10 2.5</size></box></geometry></collision>
+        <visual name="e_wall_2_v"><pose>20 0 1.25 0 0 0</pose><geometry><box><size>0.2 10 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="e_wall_3"><pose>20 -15 1.25 0 0 0</pose><geometry><box><size>0.2 10 2.5</size></box></geometry></collision>
+        <visual name="e_wall_3_v"><pose>20 -15 1.25 0 0 0</pose><geometry><box><size>0.2 10 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <!-- TƯỜNG TÂY (X = -20): Thủng một lỗ khổng lồ 10m ở giữa -->
+        <collision name="w_wall_1"><pose>-20 12.5 1.25 0 0 0</pose><geometry><box><size>0.2 15 2.5</size></box></geometry></collision>
+        <visual name="w_wall_1_v"><pose>-20 12.5 1.25 0 0 0</pose><geometry><box><size>0.2 15 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+
+        <collision name="w_wall_2"><pose>-20 -12.5 1.25 0 0 0</pose><geometry><box><size>0.2 15 2.5</size></box></geometry></collision>
+        <visual name="w_wall_2_v"><pose>-20 -12.5 1.25 0 0 0</pose><geometry><box><size>0.2 15 2.5</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Grey</name></script></material></visual>
+      </link>
+    </model>
+
+    <!-- ============================================ -->
+    <!-- ĐẶC TRƯNG RẢI RÁC (10 VẬT THỂ NHIỀU KÍCH CỠ)   -->
+    <!-- Nằm rải rác bên trong và lấp ló ở khe hở      -->
+    <!-- ============================================ -->
+    <model name="scattered_objects">
+      <static>true</static>
+      <link name="objects">
+        
+        <!-- Vật 1: Khối trụ đỏ lớn -->
+        <visual name="obj1_v"><pose>8 12 1.5 0 0 0</pose><geometry><cylinder><radius>0.6</radius><length>3</length></cylinder></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Red</name></script></material></visual>
+        <collision name="obj1_c"><pose>8 12 1.5 0 0 0</pose><geometry><cylinder><radius>0.6</radius><length>3</length></cylinder></geometry></collision>
+
+        <!-- Vật 2: Hộp xanh dương nằm gần khe hở Tây -->
+        <visual name="obj2_v"><pose>-15 2 0.8 0 0 0</pose><geometry><box><size>1.6 1.6 1.6</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Blue</name></script></material></visual>
+        <collision name="obj2_c"><pose>-15 2 0.8 0 0 0</pose><geometry><box><size>1.6 1.6 1.6</size></box></geometry></collision>
+
+        <!-- Vật 3: Khối cầu xanh lá cây -->
+        <visual name="obj3_v"><pose>12 -8 0.8 0 0 0</pose><geometry><sphere><radius>0.8</radius></sphere></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Green</name></script></material></visual>
+        <collision name="obj3_c"><pose>12 -8 0.8 0 0 0</pose><geometry><sphere><radius>0.8</radius></sphere></geometry></collision>
+
+        <!-- Vật 4: Trụ vàng nằm ở rìa hở phía Nam -->
+        <visual name="obj4_v"><pose>-4 -18 1.0 0 0 0</pose><geometry><cylinder><radius>0.4</radius><length>2</length></cylinder></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Yellow</name></script></material></visual>
+        <collision name="obj4_c"><pose>-4 -18 1.0 0 0 0</pose><geometry><cylinder><radius>0.4</radius><length>2</length></cylinder></geometry></collision>
+
+        <!-- Vật 5: Hộp tím nằm sát tường Đông -->
+        <visual name="obj5_v"><pose>18 6 1.0 0 0 0</pose><geometry><box><size>1.0 1.0 2.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Purple</name></script></material></visual>
+        <collision name="obj5_c"><pose>18 6 1.0 0 0 0</pose><geometry><box><size>1.0 1.0 2.0</size></box></geometry></collision>
+
+        <!-- Vật 6: Cầu cam nằm ở góc Tây Bắc -->
+        <visual name="obj6_v"><pose>-12 15 0.5 0 0 0</pose><geometry><sphere><radius>0.5</radius></sphere></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Orange</name></script></material></visual>
+        <collision name="obj6_c"><pose>-12 15 0.5 0 0 0</pose><geometry><sphere><radius>0.5</radius></sphere></geometry></collision>
+
+        <!-- Vật 7: Cột trắng trơ trọi giữa tâm map -->
+        <visual name="obj7_v"><pose>0 0 1.0 0 0 0</pose><geometry><cylinder><radius>0.2</radius><length>2</length></cylinder></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/White</name></script></material></visual>
+        <collision name="obj7_c"><pose>0 0 1.0 0 0 0</pose><geometry><cylinder><radius>0.2</radius><length>2</length></cylinder></geometry></collision>
+
+        <!-- Vật 8: Cửa gỗ nằm ngoài rìa tường Nam (Lấp ló ngoài khe hở) -->
+        <visual name="obj8_v"><pose>5 -22 1.0 0 0 0</pose><geometry><box><size>2.0 0.2 2.0</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Wood</name></script></material></visual>
+        <collision name="obj8_c"><pose>5 -22 1.0 0 0 0</pose><geometry><box><size>2.0 0.2 2.0</size></box></geometry></collision>
+
+        <!-- Vật 9: Cột đen ở góc Tây Nam -->
+        <visual name="obj9_v"><pose>-16 -16 1.5 0 0 0</pose><geometry><cylinder><radius>0.5</radius><length>3.0</length></cylinder></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Black</name></script></material></visual>
+        <collision name="obj9_c"><pose>-16 -16 1.5 0 0 0</pose><geometry><cylinder><radius>0.5</radius><length>3.0</length></cylinder></geometry></collision>
+
+        <!-- Vật 10: Hộp xanh lơ ở góc Đông Nam -->
+        <visual name="obj10_v"><pose>15 -15 0.6 0 0 0</pose><geometry><box><size>1.2 1.2 1.2</size></box></geometry><material><script><uri>file://media/materials/scripts/gazebo.material</uri><name>Gazebo/Turquoise</name></script></material></visual>
+        <collision name="obj10_c"><pose>15 -15 0.6 0 0 0</pose><geometry><box><size>1.2 1.2 1.2</size></box></geometry></collision>
+
+      </link>
+    </model>
+
+  </world>
+</sdf>
