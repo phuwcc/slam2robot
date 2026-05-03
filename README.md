@@ -9,7 +9,7 @@
 
 ## 📌 Giới thiệu
 
-Package `slam2robot` là môi trường mô phỏng robot bánh xích tích hợp tay máy 2 bậc tự do trong Gazebo, có thêm cảm biến để chạy `SLAM Cartographer 2D`.
+Package `slam2robot` là môi trường mô phỏng robot bánh xích tích hợp tay máy 2 bậc tự do trong Gazebo, có thêm cảm biến để chạy SLAM 2D.
 
 Hệ thống bao gồm:
 
@@ -19,7 +19,7 @@ Hệ thống bao gồm:
 - Điều khiển **diff-drive bằng bàn phím**
 - Sử dụng **ros2_control** cho 2 khớp tay `l1`, `l2`
 - Node `arm_controller` để nhập góc điều khiển tay máy
-- Launch `cartographer.launch.py` để dựng bản đồ 2D
+- Launch `gazebo.launch.py` để chọn map và thuật toán SLAM
 
 ---
 
@@ -33,6 +33,7 @@ Hệ thống bao gồm:
   - IMU (`/imu`)
 - 🗺️ SLAM:
   - Cartographer 2D
+  - Gmapping
   - Occupancy Grid (`/map`)
 - 🎮 Điều khiển:
   - Bàn phím (`/cmd_vel`)
@@ -80,10 +81,13 @@ cd ~/ros2_ws/src
 
 ```bash
 cd ~/ros2_ws
+rm -rf build install log
 source /opt/ros/humble/setup.bash
 colcon build --packages-select slam2robot
 source install/setup.bash
 ```
+
+Nếu chỉ build lại package này sau khi sửa launch/URDF/config, nên dùng lại đúng chuỗi lệnh trên để tránh dính file build cũ.
 
 Mỗi terminal mới đều nên chạy:
 
@@ -116,6 +120,27 @@ Ví dụ:
 ```bash
 ros2 launch slam2robot gazebo.launch.py world:=world_3 slam:=gmapping
 ```
+
+Nếu muốn nạp sẵn một map tham chiếu trong thư mục `map/` và vẫn chạy SLAM để so sánh trực tiếp trong RViz:
+
+```bash
+ros2 launch slam2robot gazebo.launch.py \
+  world:=world_3 \
+  slam:=cartographer \
+  selected_map:=warehouse.yaml \
+  map_file:=warehouse_scan
+```
+
+Ý nghĩa:
+
+- `selected_map:=warehouse.yaml`: nạp map tham chiếu từ `share/slam2robot/map/warehouse.yaml`
+- `slam:=cartographer` hoặc `slam:=gmapping`: chọn thuật toán SLAM
+- `map_file:=warehouse_scan`: lưu ra `share/slam2robot/map/warehouse_scan.yaml` và `.pgm`
+
+RViz sau khi sửa sẽ hiển thị:
+
+- `Reference Map`: map đã chọn
+- `SLAM Map`: map robot đang quét realtime
 
 ## 4. Điều khiển robot di chuyển bằng bàn phím
 
@@ -247,21 +272,29 @@ ros2 launch slam2robot gazebo.launch.py start_gazebo:=false world:=world_1 slam:
 - Base frame: `base_link`
 - Map frame: `map`
 
+File cấu hình:
+
+- Cartographer: `config/cartographer_2d.lua`
+- Gmapping: `config/gmapping.yaml`
+
 ### Lưu bản đồ sau khi quét xong
 
-Lưu map bằng lệnh trực tiếp:
+`gazebo.launch.py` hiện đã bật autosave mặc định. Khi bạn dừng launch bằng `Ctrl+C`, node `map_autosaver` sẽ ghi:
 
-```bash
-ros2 run nav2_map_server map_saver_cli -f ~/my_map
-```
+- `<map_file>.yaml`
+- `<map_file>.pgm`
 
-Hoặc dùng chính `cartographer.launch.py`:
+vào thư mục `map/` hoặc đường dẫn bạn truyền qua tham số `map_file`.
+
+Nếu `map_file` là đường dẫn tương đối, launch sẽ tự hiểu là lưu trong thư mục `share/slam2robot/map/`.
+
+Hoặc dùng chính `gazebo.launch.py`:
 
 ```bash
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot cartographer.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true
+ros2 launch slam2robot gazebo.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true world:=world_1 slam:=cartographer
 ```
 
 Lưu vào đường dẫn khác:
@@ -270,7 +303,7 @@ Lưu vào đường dẫn khác:
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot cartographer.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true map_file:=/tmp/my_map
+ros2 launch slam2robot gazebo.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true world:=world_1 slam:=cartographer map_file:=/tmp/my_map
 ```
 
 ---
@@ -334,7 +367,7 @@ ros2 run tf2_tools view_frames
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot gazebo.launch.py
+ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
 ```
 
 **Terminal 2:**
@@ -372,7 +405,7 @@ ros2 run slam2robot arm_controller
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot cartographer.launch.py
+ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
 ```
 
 **Terminal 2:**
@@ -392,7 +425,7 @@ Di chuyển robot để quét bản đồ.
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot cartographer.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true map_file:=~/my_map
+ros2 launch slam2robot gazebo.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true world:=world_1 slam:=cartographer map_file:=~/my_map
 ```
 
 Lệnh ở `Terminal 3` dùng để lưu map sau khi quét xong.

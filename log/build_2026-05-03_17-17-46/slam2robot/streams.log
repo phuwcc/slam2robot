@@ -1,0 +1,75 @@
+[0.787s] Invoking command in '/home/phuc/ros2_ws/src/slam2robot': PYTHONPATH=/home/phuc/ros2_ws/src/slam2robot/build/slam2robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/slam2robot build --build-base /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/build install --record /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/install.log --single-version-externally-managed install_data
+[1.065s] running egg_info
+[1.065s] creating build/slam2robot/slam2robot.egg-info
+[1.066s] writing build/slam2robot/slam2robot.egg-info/PKG-INFO
+[1.066s] writing dependency_links to build/slam2robot/slam2robot.egg-info/dependency_links.txt
+[1.066s] writing entry points to build/slam2robot/slam2robot.egg-info/entry_points.txt
+[1.066s] writing requirements to build/slam2robot/slam2robot.egg-info/requires.txt
+[1.066s] writing top-level names to build/slam2robot/slam2robot.egg-info/top_level.txt
+[1.067s] writing manifest file 'build/slam2robot/slam2robot.egg-info/SOURCES.txt'
+[1.069s] reading manifest file 'build/slam2robot/slam2robot.egg-info/SOURCES.txt'
+[1.069s] adding license file 'LICENSE'
+[1.070s] writing manifest file 'build/slam2robot/slam2robot.egg-info/SOURCES.txt'
+[1.070s] running build
+[1.070s] running build_py
+[1.070s] creating /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/build
+[1.070s] creating /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/build/lib
+[1.070s] creating /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/build/lib/slam2robot
+[1.070s] copying slam2robot/map_autosaver.py -> /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/build/lib/slam2robot
+[1.070s] copying slam2robot/arm_controller.py -> /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/build/lib/slam2robot
+[1.070s] copying slam2robot/__init__.py -> /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/build/lib/slam2robot
+[1.070s] running install
+[1.071s] running install_lib
+[1.071s] creating /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot
+[1.072s] copying /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/build/lib/slam2robot/map_autosaver.py -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot
+[1.072s] copying /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/build/lib/slam2robot/arm_controller.py -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot
+[1.072s] copying /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/build/lib/slam2robot/__init__.py -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot
+[1.072s] byte-compiling /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot/map_autosaver.py to map_autosaver.cpython-310.pyc
+[1.073s] byte-compiling /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot/arm_controller.py to arm_controller.cpython-310.pyc
+[1.074s] byte-compiling /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot/__init__.py to __init__.cpython-310.pyc
+[1.074s] running install_data
+[1.074s] creating /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/ament_index
+[1.074s] creating /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/ament_index/resource_index
+[1.074s] creating /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/ament_index/resource_index/packages
+[1.075s] copying resource/slam2robot -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/ament_index/resource_index/packages
+[1.075s] copying package.xml -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot
+[1.075s] creating /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/launch
+[1.075s] copying launch/gazebo.launch.py -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/launch
+[1.075s] copying launch/gmapping.launch.py -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/launch
+[1.075s] copying launch/display.launch.py -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/launch
+[1.076s] copying launch/cartographer.launch.py -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/launch
+[1.076s] creating /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/urdf
+[1.076s] copying urdf/slam2robot.urdf -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/urdf
+[1.076s] creating /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.076s] copying meshes/link1.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.076s] copying meshes/wheel2.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.076s] copying meshes/wheel4.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.076s] copying meshes/imu.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.076s] copying meshes/track1.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.076s] copying meshes/track2.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.076s] copying meshes/base_link.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.076s] copying meshes/wheel3.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.076s] copying meshes/camera.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.077s] copying meshes/wheel1.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.077s] copying meshes/link2.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.077s] copying meshes/lidar.STL -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/meshes
+[1.077s] creating /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/rviz
+[1.077s] copying rviz/robot.rviz -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/rviz
+[1.077s] creating /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/config
+[1.077s] copying config/controllers.yaml -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/config
+[1.078s] copying config/gmapping.yaml -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/config
+[1.078s] copying config/cartographer_2d.lua -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/config
+[1.078s] creating /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/world
+[1.078s] copying world/world_3.world -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/world
+[1.078s] copying world/world_2.world -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/world
+[1.078s] copying world/world_5.world -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/world
+[1.078s] copying world/world_1.world -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/world
+[1.078s] copying world/world_4.world -> /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/world
+[1.078s] creating /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/share/slam2robot/map
+[1.078s] running install_egg_info
+[1.080s] Copying build/slam2robot/slam2robot.egg-info to /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot-0.0.0-py3.10.egg-info
+[1.081s] running install_scripts
+[1.100s] Installing arm_controller script to /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/slam2robot
+[1.100s] Installing map_autosaver script to /home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/slam2robot
+[1.101s] writing list of installed files to '/home/phuc/ros2_ws/src/slam2robot/build/slam2robot/install.log'
+[1.129s] Invoked command in '/home/phuc/ros2_ws/src/slam2robot' returned '0': PYTHONPATH=/home/phuc/ros2_ws/src/slam2robot/build/slam2robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/phuc/ros2_ws/src/slam2robot/install/slam2robot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/slam2robot build --build-base /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/build install --record /home/phuc/ros2_ws/src/slam2robot/build/slam2robot/install.log --single-version-externally-managed install_data
