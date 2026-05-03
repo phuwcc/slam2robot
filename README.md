@@ -64,9 +64,10 @@ sudo apt install -y \
   ros-humble-teleop-twist-keyboard \
   ros-humble-cartographer \
   ros-humble-cartographer-ros \
-  ros-humble-slam-gmapping \
   ros-humble-nav2-map-server
 ```
+
+`slam_toolbox` cần package ROS 2 `slam_toolbox`. Nếu máy bạn không có package này trong `ros2 pkg list`, chế độ `slam:=slam_toolbox` sẽ không chạy được.
 
 Nếu chưa có workspace:
 
@@ -108,18 +109,18 @@ ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
 
 Launch này sẽ:
 
-- Nạp `robot_description`
+- Nạp `slam2robot.urdf`
 - Mở Gazebo với một trong 5 world: `world_1` ... `world_5`
 - Spawn robot vào môi trường với vị trí mặc định phù hợp theo từng world
 - Khởi tạo `joint_state_broadcaster`
 - Khởi tạo `joint_position_controller` cho cánh tay
-- Chạy một trong 2 thuật toán SLAM: `cartographer` hoặc `gmapping`
+- Chạy một trong 2 thuật toán SLAM: `cartographer` hoặc `slam_toolbox`
 - Không mở RViz
 
 Ví dụ:
 
 ```bash
-ros2 launch slam2robot gazebo.launch.py world:=world_3 slam:=gmapping
+ros2 launch slam2robot gazebo.launch.py world:=world_3 slam:=slam_toolbox
 ```
 
 Nếu cần tự chọn vị trí spawn, có thể override:
@@ -141,7 +142,7 @@ ros2 launch slam2robot gazebo.launch.py \
 Ý nghĩa:
 
 - `selected_map:=warehouse.yaml`: nạp map tham chiếu từ `share/slam2robot/map/warehouse.yaml`
-- `slam:=cartographer` hoặc `slam:=gmapping`: chọn thuật toán SLAM
+- `slam:=cartographer` hoặc `slam:=slam_toolbox`: chọn thuật toán SLAM
 - `map_file:=warehouse_scan`: lưu ra `share/slam2robot/map/warehouse_scan.yaml` và `.pgm`
 
 Để xem trên RViz, mở terminal khác và chạy:
@@ -292,7 +293,7 @@ ros2 launch slam2robot gazebo.launch.py start_gazebo:=false world:=world_1 slam:
 File cấu hình:
 
 - Cartographer: `config/cartographer_2d.lua`
-- Gmapping: `config/gmapping.yaml`
+- Slam Toolbox: `config/slam_toolbox.yaml`
 
 ### Lưu bản đồ sau khi quét xong
 

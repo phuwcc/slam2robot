@@ -20,7 +20,7 @@ def generate_launch_description():
             'start_slam': LaunchConfiguration('start_slam'),
             'save_map': LaunchConfiguration('save_map'),
             'world': LaunchConfiguration('world'),
-            'slam': 'gmapping',
+            'slam': 'slam_toolbox',
             'selected_map': LaunchConfiguration('selected_map'),
             'map_file': LaunchConfiguration('map_file'),
             'free_thresh': LaunchConfiguration('free_thresh'),
