@@ -1,0 +1,75 @@
+[0.402s] Invoking command in '/home/quan/slam2robot': PYTHONPATH=/home/quan/slam2robot/build/slam2robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/slam2robot build --build-base /home/quan/slam2robot/build/slam2robot/build install --record /home/quan/slam2robot/build/slam2robot/install.log --single-version-externally-managed install_data
+[0.556s] running egg_info
+[0.556s] creating build/slam2robot/slam2robot.egg-info
+[0.556s] writing build/slam2robot/slam2robot.egg-info/PKG-INFO
+[0.556s] writing dependency_links to build/slam2robot/slam2robot.egg-info/dependency_links.txt
+[0.556s] writing entry points to build/slam2robot/slam2robot.egg-info/entry_points.txt
+[0.556s] writing requirements to build/slam2robot/slam2robot.egg-info/requires.txt
+[0.556s] writing top-level names to build/slam2robot/slam2robot.egg-info/top_level.txt
+[0.556s] writing manifest file 'build/slam2robot/slam2robot.egg-info/SOURCES.txt'
+[0.557s] reading manifest file 'build/slam2robot/slam2robot.egg-info/SOURCES.txt'
+[0.557s] adding license file 'LICENSE'
+[0.558s] writing manifest file 'build/slam2robot/slam2robot.egg-info/SOURCES.txt'
+[0.558s] running build
+[0.558s] running build_py
+[0.558s] creating /home/quan/slam2robot/build/slam2robot/build
+[0.558s] creating /home/quan/slam2robot/build/slam2robot/build/lib
+[0.558s] creating /home/quan/slam2robot/build/slam2robot/build/lib/slam2robot
+[0.558s] copying slam2robot/arm_controller.py -> /home/quan/slam2robot/build/slam2robot/build/lib/slam2robot
+[0.558s] copying slam2robot/map_autosaver.py -> /home/quan/slam2robot/build/slam2robot/build/lib/slam2robot
+[0.558s] copying slam2robot/__init__.py -> /home/quan/slam2robot/build/slam2robot/build/lib/slam2robot
+[0.558s] running install
+[0.559s] running install_lib
+[0.559s] creating /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot
+[0.559s] copying /home/quan/slam2robot/build/slam2robot/build/lib/slam2robot/arm_controller.py -> /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot
+[0.559s] copying /home/quan/slam2robot/build/slam2robot/build/lib/slam2robot/map_autosaver.py -> /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot
+[0.559s] copying /home/quan/slam2robot/build/slam2robot/build/lib/slam2robot/__init__.py -> /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot
+[0.559s] byte-compiling /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot/arm_controller.py to arm_controller.cpython-310.pyc
+[0.560s] byte-compiling /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot/map_autosaver.py to map_autosaver.cpython-310.pyc
+[0.561s] byte-compiling /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot/__init__.py to __init__.cpython-310.pyc
+[0.561s] running install_data
+[0.561s] creating /home/quan/slam2robot/install/slam2robot/share/ament_index
+[0.561s] creating /home/quan/slam2robot/install/slam2robot/share/ament_index/resource_index
+[0.561s] creating /home/quan/slam2robot/install/slam2robot/share/ament_index/resource_index/packages
+[0.561s] copying resource/slam2robot -> /home/quan/slam2robot/install/slam2robot/share/ament_index/resource_index/packages
+[0.561s] copying package.xml -> /home/quan/slam2robot/install/slam2robot/share/slam2robot
+[0.561s] creating /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch
+[0.561s] copying launch/gmapping.launch.py -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch
+[0.561s] copying launch/cartographer.launch.py -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch
+[0.561s] copying launch/gazebo.launch.py -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch
+[0.561s] copying launch/display.launch.py -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch
+[0.561s] creating /home/quan/slam2robot/install/slam2robot/share/slam2robot/urdf
+[0.561s] copying urdf/slam2robot.urdf -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/urdf
+[0.561s] creating /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.561s] copying meshes/imu.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.561s] copying meshes/track2.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.561s] copying meshes/base_link.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.561s] copying meshes/wheel3.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.561s] copying meshes/camera.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.561s] copying meshes/wheel2.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.561s] copying meshes/link2.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.561s] copying meshes/wheel4.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.561s] copying meshes/wheel1.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.562s] copying meshes/lidar.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.562s] copying meshes/track1.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.562s] copying meshes/link1.STL -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes
+[0.562s] creating /home/quan/slam2robot/install/slam2robot/share/slam2robot/rviz
+[0.562s] copying rviz/robot.rviz -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/rviz
+[0.562s] creating /home/quan/slam2robot/install/slam2robot/share/slam2robot/config
+[0.562s] copying config/controllers.yaml -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/config
+[0.562s] copying config/gmapping.yaml -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/config
+[0.562s] copying config/cartographer_2d.lua -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/config
+[0.562s] creating /home/quan/slam2robot/install/slam2robot/share/slam2robot/world
+[0.562s] copying world/world_5.world -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/world
+[0.562s] copying world/world_3.world -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/world
+[0.562s] copying world/world_1.world -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/world
+[0.562s] copying world/world_2.world -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/world
+[0.562s] copying world/world_4.world -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/world
+[0.562s] creating /home/quan/slam2robot/install/slam2robot/share/slam2robot/map
+[0.562s] running install_egg_info
+[0.564s] Copying build/slam2robot/slam2robot.egg-info to /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot-0.0.0-py3.10.egg-info
+[0.564s] running install_scripts
+[0.578s] Installing arm_controller script to /home/quan/slam2robot/install/slam2robot/lib/slam2robot
+[0.578s] Installing map_autosaver script to /home/quan/slam2robot/install/slam2robot/lib/slam2robot
+[0.578s] writing list of installed files to '/home/quan/slam2robot/build/slam2robot/install.log'
+[0.594s] Invoked command in '/home/quan/slam2robot' returned '0': PYTHONPATH=/home/quan/slam2robot/build/slam2robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/slam2robot build --build-base /home/quan/slam2robot/build/slam2robot/build install --record /home/quan/slam2robot/build/slam2robot/install.log --single-version-externally-managed install_data
