@@ -1,4 +1,0 @@
-[console_scripts]
-arm_controller = slam2robot.arm_controller:main
-map_autosaver = slam2robot.map_autosaver:main
-
