@@ -22,6 +22,13 @@ from launch_ros.actions import Node
 VALID_WORLDS = {f'world_{index}': f'world_{index}.world' for index in range(1, 6)}
 VALID_SLAM = {'cartographer', 'gmapping'}
 DISABLED_MAP_VALUES = {'', 'none', 'false', 'no'}
+WORLD_SPAWN_DEFAULTS = {
+    'world_1': ('-2.0', '-0.5', '0.01'),
+    'world_2': ('2.0', '0.0', '0.01'),
+    'world_3': ('-2.0', '-0.5', '0.01'),
+    'world_4': ('-2.0', '-0.5', '0.01'),
+    'world_5': ('-2.0', '-0.5', '0.01'),
+}
 
 
 def _resolve_selected_map(pkg_share, selected_map):
@@ -65,6 +72,16 @@ def _resolve_map_output_prefix(pkg_share, map_file):
     return os.path.normpath(resolved_path)
 
 
+def _resolve_spawn_pose(selected_world, spawn_x, spawn_y, spawn_z):
+    default_spawn_x, default_spawn_y, default_spawn_z = WORLD_SPAWN_DEFAULTS[selected_world]
+
+    resolved_spawn_x = default_spawn_x if spawn_x.strip().lower() == 'auto' else spawn_x
+    resolved_spawn_y = default_spawn_y if spawn_y.strip().lower() == 'auto' else spawn_y
+    resolved_spawn_z = default_spawn_z if spawn_z.strip().lower() == 'auto' else spawn_z
+
+    return resolved_spawn_x, resolved_spawn_y, resolved_spawn_z
+
+
 def _launch_setup(context, *args, **kwargs):
     pkg_share = get_package_share_directory('slam2robot')
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
@@ -73,6 +90,9 @@ def _launch_setup(context, *args, **kwargs):
     selected_slam = LaunchConfiguration('slam').perform(context)
     selected_map = LaunchConfiguration('selected_map').perform(context)
     map_file = LaunchConfiguration('map_file').perform(context)
+    spawn_x = LaunchConfiguration('spawn_x').perform(context)
+    spawn_y = LaunchConfiguration('spawn_y').perform(context)
+    spawn_z = LaunchConfiguration('spawn_z').perform(context)
 
     if selected_world not in VALID_WORLDS:
         raise RuntimeError(
@@ -87,6 +107,9 @@ def _launch_setup(context, *args, **kwargs):
     world_path = os.path.join(pkg_share, 'world', VALID_WORLDS[selected_world])
     selected_map_path = _resolve_selected_map(pkg_share, selected_map)
     resolved_map_file = _resolve_map_output_prefix(pkg_share, map_file)
+    resolved_spawn_x, resolved_spawn_y, resolved_spawn_z = _resolve_spawn_pose(
+        selected_world, spawn_x, spawn_y, spawn_z
+    )
     workspace_models_path = os.path.join(pkg_share, '..')
     controller_config_file = os.path.join(pkg_share, 'config', 'controllers.yaml')
     cartographer_config_dir = os.path.join(pkg_share, 'config')
@@ -135,11 +158,11 @@ def _launch_setup(context, *args, **kwargs):
             '-entity',
             'slam2robot',
             '-x',
-            LaunchConfiguration('spawn_x'),
+            resolved_spawn_x,
             '-y',
-            LaunchConfiguration('spawn_y'),
+            resolved_spawn_y,
             '-z',
-            LaunchConfiguration('spawn_z'),
+            resolved_spawn_z,
         ],
         output='screen',
     )
@@ -274,6 +297,11 @@ def _launch_setup(context, *args, **kwargs):
         msg=[f'Map autosave target: {resolved_map_file}'],
         condition=IfCondition(LaunchConfiguration('save_map')),
     )
+    spawn_log = LogInfo(
+        msg=[
+            f'Spawning robot at x={resolved_spawn_x}, y={resolved_spawn_y}, z={resolved_spawn_z}'
+        ]
+    )
 
     save_map_node = Node(
         package='slam2robot',
@@ -307,6 +335,7 @@ def _launch_setup(context, *args, **kwargs):
         set_gazebo_model_path,
         world_log,
         slam_log,
+        spawn_log,
         robot_state_publisher,
         gazebo_group,
         slam_group,
@@ -332,9 +361,9 @@ def generate_launch_description():
             DeclareLaunchArgument('map_file', default_value=default_map_dir),
             DeclareLaunchArgument('free_thresh', default_value='0.25'),
             DeclareLaunchArgument('occupied_thresh', default_value='0.65'),
-            DeclareLaunchArgument('spawn_x', default_value='-2.0'),
-            DeclareLaunchArgument('spawn_y', default_value='-0.5'),
-            DeclareLaunchArgument('spawn_z', default_value='0.01'),
+            DeclareLaunchArgument('spawn_x', default_value='auto'),
+            DeclareLaunchArgument('spawn_y', default_value='auto'),
+            DeclareLaunchArgument('spawn_z', default_value='auto'),
             OpaqueFunction(function=_launch_setup),
         ]
     )

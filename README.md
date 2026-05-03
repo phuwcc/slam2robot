@@ -110,7 +110,7 @@ Launch này sẽ:
 
 - Nạp `robot_description`
 - Mở Gazebo với một trong 5 world: `world_1` ... `world_5`
-- Spawn robot vào môi trường
+- Spawn robot vào môi trường với vị trí mặc định phù hợp theo từng world
 - Khởi tạo `joint_state_broadcaster`
 - Khởi tạo `joint_position_controller` cho cánh tay
 - Chạy một trong 2 thuật toán SLAM: `cartographer` hoặc `gmapping`
@@ -120,6 +120,12 @@ Ví dụ:
 
 ```bash
 ros2 launch slam2robot gazebo.launch.py world:=world_3 slam:=gmapping
+```
+
+Nếu cần tự chọn vị trí spawn, có thể override:
+
+```bash
+ros2 launch slam2robot gazebo.launch.py world:=world_2 slam:=cartographer spawn_x:=2.0 spawn_y:=0.0 spawn_z:=0.01
 ```
 
 Nếu muốn nạp sẵn một map tham chiếu trong thư mục `map/` và vẫn chạy SLAM:
