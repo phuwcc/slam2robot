@@ -109,7 +109,7 @@ ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
 
 Launch này sẽ:
 
-- Nạp `robot_description`
+- Nạp `slam2robot.urdf`
 - Mở Gazebo với một trong 5 world: `world_1` ... `world_5`
 - Spawn robot vào môi trường với vị trí mặc định phù hợp theo từng world
 - Khởi tạo `joint_state_broadcaster`
