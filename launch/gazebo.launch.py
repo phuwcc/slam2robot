@@ -1,7 +1,7 @@
 import os
 
 import xacro
-from ament_index_python.packages import get_package_share_directory
+from ament_index_python.packages import PackageNotFoundError, get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
@@ -20,7 +20,7 @@ from launch_ros.actions import Node
 
 
 VALID_WORLDS = {f'world_{index}': f'world_{index}.world' for index in range(1, 6)}
-VALID_SLAM = {'cartographer', 'gmapping'}
+VALID_SLAM = {'cartographer', 'slam_toolbox'}
 DISABLED_MAP_VALUES = {'', 'none', 'false', 'no'}
 WORLD_SPAWN_DEFAULTS = {
     'world_1': ('-2.0', '-0.5', '0.01'),
@@ -104,6 +104,16 @@ def _launch_setup(context, *args, **kwargs):
             f"Invalid slam '{selected_slam}'. Valid options: {', '.join(sorted(VALID_SLAM))}"
         )
 
+    if selected_slam == 'slam_toolbox':
+        try:
+            get_package_share_directory('slam_toolbox')
+        except PackageNotFoundError as exc:
+            raise RuntimeError(
+                "SLAM mode 'slam_toolbox' requires package 'slam_toolbox', but it is not available in the "
+                "current environment. Install/build 'slam_toolbox', or launch with 'slam:=cartographer' "
+                "instead."
+            ) from exc
+
     world_path = os.path.join(pkg_share, 'world', VALID_WORLDS[selected_world])
     selected_map_path = _resolve_selected_map(pkg_share, selected_map)
     resolved_map_file = _resolve_map_output_prefix(pkg_share, map_file)
@@ -113,7 +123,7 @@ def _launch_setup(context, *args, **kwargs):
     workspace_models_path = os.path.join(pkg_share, '..')
     controller_config_file = os.path.join(pkg_share, 'config', 'controllers.yaml')
     cartographer_config_dir = os.path.join(pkg_share, 'config')
-    gmapping_config_file = os.path.join(pkg_share, 'config', 'gmapping.yaml')
+    slam_toolbox_config_file = os.path.join(pkg_share, 'config', 'slam_toolbox.yaml')
     xacro_file = os.path.join(pkg_share, 'urdf', 'slam2robot.urdf')
 
     robot_desc = xacro.process_file(xacro_file).toxml().replace(
@@ -216,8 +226,8 @@ def _launch_setup(context, *args, **kwargs):
     slam_is_cartographer = PythonExpression(
         ["'", LaunchConfiguration('slam'), "' == 'cartographer'"]
     )
-    slam_is_gmapping = PythonExpression(
-        ["'", LaunchConfiguration('slam'), "' == 'gmapping'"]
+    slam_is_slam_toolbox = PythonExpression(
+        ["'", LaunchConfiguration('slam'), "' == 'slam_toolbox'"]
     )
     cartographer_node = Node(
         package='cartographer_ros',
@@ -245,17 +255,16 @@ def _launch_setup(context, *args, **kwargs):
         condition=IfCondition(slam_is_cartographer),
     )
 
-    gmapping_node = Node(
-        package='slam_gmapping',
-        executable='slam_gmapping',
-        name='slam_gmapping',
+    slam_toolbox_node = Node(
+        package='slam_toolbox',
+        executable='async_slam_toolbox_node',
+        name='slam_toolbox',
         output='screen',
         parameters=[
-            gmapping_config_file,
+            slam_toolbox_config_file,
             {'use_sim_time': LaunchConfiguration('use_sim_time')},
         ],
-        remappings=[('scan', '/scan')],
-        condition=IfCondition(slam_is_gmapping),
+        condition=IfCondition(slam_is_slam_toolbox),
     )
 
     reference_map_actions = []
@@ -327,7 +336,7 @@ def _launch_setup(context, *args, **kwargs):
         actions=[
             cartographer_node,
             occupancy_grid_node,
-            gmapping_node,
+            slam_toolbox_node,
         ],
     )
 
