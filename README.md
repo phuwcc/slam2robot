@@ -257,7 +257,7 @@ source install/setup.bash
 ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
 ```
 
-Launch này sẽ khởi động Gazebo, chạy Cartographer và mở RViz.
+Launch này sẽ khởi động Gazebo, spawn robot và chạy Cartographer.
 
 ### Cách 2: Gazebo đã chạy sẵn
 
@@ -299,13 +299,15 @@ vào thư mục `map/` hoặc đường dẫn bạn truyền qua tham số `map_
 
 Nếu `map_file` là đường dẫn tương đối, launch sẽ tự hiểu là lưu trong thư mục `share/slam2robot/map/`.
 
-Hoặc dùng chính `gazebo.launch.py`:
+Map được autosave khi bạn dừng phiên `gazebo.launch.py` bằng `Ctrl+C`, nên không cần mở thêm launch riêng chỉ để lưu map.
+
+Nếu muốn chỉ lưu thử map từ topic `/map` mà không mở Gazebo/SLAM mới, dùng đường dẫn mặc định:
 
 ```bash
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot gazebo.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true world:=world_1 slam:=cartographer
+ros2 run slam2robot map_autosaver
 ```
 
 Lưu vào đường dẫn khác:
@@ -314,7 +316,7 @@ Lưu vào đường dẫn khác:
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot gazebo.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true world:=world_1 slam:=cartographer map_file:=/tmp/my_map
+ros2 run slam2robot map_autosaver --ros-args -p map_file:=/tmp/my_map
 ```
 
 ---
@@ -436,7 +438,7 @@ Di chuyển robot để quét bản đồ.
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot gazebo.launch.py start_gazebo:=false start_slam:=false start_rviz:=false save_map:=true world:=world_1 slam:=cartographer map_file:=~/my_map
+ros2 launch slam2robot display.launch.py
 ```
 
-Lệnh ở `Terminal 3` dùng để lưu map sau khi quét xong.
+**Khi quét xong**, nhấn `Ctrl+C` ở `Terminal 1`. `map_autosaver` sẽ tự lưu map vào `share/slam2robot/map/slam_map.yaml` và `.pgm`, hoặc đường dẫn bạn truyền qua `map_file`.

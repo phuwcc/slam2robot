@@ -11,9 +11,13 @@ def generate_launch_description():
     pkg_share = get_package_share_directory('slam2robot')
     xacro_file = os.path.join(pkg_share, 'urdf', 'slam2robot.urdf')
     rviz_config_file = os.path.join(pkg_share, 'rviz', 'robot.rviz')
+    controller_config_file = os.path.join(pkg_share, 'config', 'controllers.yaml')
 
     robot_description_config = xacro.process_file(xacro_file)
-    robot_desc = robot_description_config.toxml()
+    robot_desc = robot_description_config.toxml().replace(
+        '__CONTROLLER_CONFIG_FILE__',
+        controller_config_file,
+    )
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -44,9 +48,9 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        DeclareLaunchArgument('use_sim_time', default_value='false'),
-        DeclareLaunchArgument('start_robot_state_publisher', default_value='true'),
-        DeclareLaunchArgument('start_joint_state_publisher_gui', default_value='true'),
+        DeclareLaunchArgument('use_sim_time', default_value='true'),
+        DeclareLaunchArgument('start_robot_state_publisher', default_value='false'),
+        DeclareLaunchArgument('start_joint_state_publisher_gui', default_value='false'),
         DeclareLaunchArgument('start_rviz', default_value='true'),
         DeclareLaunchArgument('rviz_config', default_value=rviz_config_file),
         robot_state_publisher,

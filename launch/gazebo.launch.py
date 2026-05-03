@@ -133,7 +133,7 @@ def _launch_setup(context, *args, **kwargs):
             '-topic',
             'robot_description',
             '-entity',
-            'my_robot',
+            'slam2robot',
             '-x',
             LaunchConfiguration('spawn_x'),
             '-y',
