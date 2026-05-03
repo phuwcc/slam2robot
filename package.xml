@@ -19,12 +19,14 @@
   <exec_depend>cartographer_ros</exec_depend>
   <exec_depend>slam_gmapping</exec_depend>
   <exec_depend>nav2_map_server</exec_depend>
+  <exec_depend>nav2_lifecycle_manager</exec_depend>
 
   <depend>rclpy</depend>
   <depend>std_msgs</depend>
   <depend>trajectory_msgs</depend>
   <depend>builtin_interfaces</depend>
   <depend>sensor_msgs</depend>
+  <depend>nav_msgs</depend>
   <depend>controller_manager</depend>
   <depend>gazebo_ros2_control</depend>
   <depend>launch</depend>

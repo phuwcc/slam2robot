@@ -1,16 +1,16 @@
 Panels:
   - Class: rviz_common/Displays
-    Help Height: 78
     Name: Displays
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Map1
+        - /Grid1
         - /TF1
         - /RobotModel1
         - /LaserScan1
-      Splitter Ratio: 0.5
-    Tree Height: 560
+        - /SLAM Map1
+      Splitter Ratio: 0.42
+    Tree Height: 420
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -19,12 +19,12 @@ Panels:
       - /2D Goal Pose1
       - /Publish Point1
     Name: Tool Properties
-    Splitter Ratio: 0.5886790156364441
+    Splitter Ratio: 0.4
   - Class: rviz_common/Views
     Expanded:
       - /Current View1
     Name: Views
-    Splitter Ratio: 0.5
+    Splitter Ratio: 0.4
   - Class: rviz_common/Time
     Experimental: false
     Name: Time
@@ -39,7 +39,7 @@ Visualization Manager:
       Color: 160; 160; 164
       Enabled: true
       Line Style:
-        Line Width: 0.029999999329447746
+        Line Width: 0.03
         Value: Lines
       Name: Grid
       Normal Cell Count: 0
@@ -50,26 +50,6 @@ Visualization Manager:
       Plane: XY
       Plane Cell Count: 20
       Reference Frame: <Fixed Frame>
-      Value: true
-    - Alpha: 0.7
-      Class: rviz_default_plugins/Map
-      Color Scheme: map
-      Draw Behind: false
-      Enabled: true
-      Name: Map
-      Topic:
-        Depth: 5
-        Durability Policy: Transient Local
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /map
-      Update Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /map_updates
-      Use Timestamp: false
       Value: true
     - Class: rviz_default_plugins/TF
       Enabled: true
@@ -143,52 +123,30 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: false
       Value: true
-    - Class: rviz_default_plugins/Image
+    - Alpha: 0.7
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
       Enabled: true
-      Max Value: 1
-      Median window: 5
-      Min Value: 0
-      Name: Image
-      Normalize Range: true
+      Name: SLAM Map
       Topic:
+        Depth: 5
+        Durability Policy: Transient Local
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map
+      Update Topic:
         Depth: 5
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /camera/image_raw
+        Value: /map_updates
+      Use Timestamp: false
       Value: true
-    - Acceleration properties:
-        Acc. vector alpha: 1
-        Acc. vector color: 255; 0; 0
-        Acc. vector scale: 1
-        Derotate acceleration: true
-        Enable acceleration: false
-      Axes properties:
-        Axes scale: 1
-        Enable axes: true
-      Box properties:
-        Box alpha: 1
-        Box color: 255; 0; 0
-        Enable box: false
-        x_scale: 1
-        y_scale: 1
-        z_scale: 1
-      Class: rviz_imu_plugin/Imu
-      Enabled: true
-      Name: Imu
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        Filter size: 10
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /imu
-      Value: true
-      fixed_frame_orientation: true
   Enabled: true
   Global Options:
     Background Color: 40; 43; 49
-    Fixed Frame: base_link
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -200,9 +158,6 @@ Visualization Manager:
     - Class: rviz_default_plugins/Measure
       Line color: 128; 128; 0
     - Class: rviz_default_plugins/SetInitialPose
-      Covariance x: 0.25
-      Covariance y: 0.25
-      Covariance yaw: 0.06853891909122467
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -231,25 +186,26 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 7.5
+      Distance: 10
       Focal Point:
         X: 0
         Y: 0
         Z: 0
-      Pitch: 1.05
-      Target Frame: base_link
-      Yaw: 0.75
+      Pitch: 1.2
+      Target Frame: map
+      Yaw: 0.5
 Window Geometry:
   Displays:
-    collapsed: false
-  Height: 960
+    collapsed: true
+  Height: 980
   Hide Left Dock: false
   Hide Right Dock: false
   Selection:
-    collapsed: false
+    collapsed: true
   Time:
     collapsed: false
   Tool Properties:
-    collapsed: false
+    collapsed: true
   Views:
-    collapsed: false
+    collapsed: true
+  Width: 1600
