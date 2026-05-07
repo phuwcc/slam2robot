@@ -6,9 +6,11 @@
 /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot/__pycache__/__init__.cpython-310.pyc
 /home/quan/slam2robot/install/slam2robot/share/ament_index/resource_index/packages/slam2robot
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/package.xml
-/home/quan/slam2robot/install/slam2robot/share/slam2robot/launch/gmapping.launch.py
+/home/quan/slam2robot/install/slam2robot/share/slam2robot/launch/cartographer_standalone.launch.py
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch/cartographer.launch.py
+/home/quan/slam2robot/install/slam2robot/share/slam2robot/launch/rviz.launch.py
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch/gazebo.launch.py
+/home/quan/slam2robot/install/slam2robot/share/slam2robot/launch/slam_toolbox.launch.py
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch/display.launch.py
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/urdf/slam2robot.urdf
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes/imu.STL
@@ -25,8 +27,8 @@
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/meshes/link1.STL
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/rviz/robot.rviz
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/config/controllers.yaml
-/home/quan/slam2robot/install/slam2robot/share/slam2robot/config/gmapping.yaml
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/config/cartographer_2d.lua
+/home/quan/slam2robot/install/slam2robot/share/slam2robot/config/slam_toolbox.yaml
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/world/world_5.world
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/world/world_3.world
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/world/world_1.world

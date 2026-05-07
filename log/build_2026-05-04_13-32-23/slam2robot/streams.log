@@ -1,0 +1,23 @@
+[0.449s] Invoking command in '/home/quan/slam2robot': PYTHONPATH=/home/quan/slam2robot/build/slam2robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/slam2robot build --build-base /home/quan/slam2robot/build/slam2robot/build install --record /home/quan/slam2robot/build/slam2robot/install.log --single-version-externally-managed install_data
+[0.596s] running egg_info
+[0.596s] writing build/slam2robot/slam2robot.egg-info/PKG-INFO
+[0.598s] writing dependency_links to build/slam2robot/slam2robot.egg-info/dependency_links.txt
+[0.598s] writing entry points to build/slam2robot/slam2robot.egg-info/entry_points.txt
+[0.598s] writing requirements to build/slam2robot/slam2robot.egg-info/requires.txt
+[0.598s] writing top-level names to build/slam2robot/slam2robot.egg-info/top_level.txt
+[0.600s] reading manifest file 'build/slam2robot/slam2robot.egg-info/SOURCES.txt'
+[0.600s] adding license file 'LICENSE'
+[0.601s] writing manifest file 'build/slam2robot/slam2robot.egg-info/SOURCES.txt'
+[0.601s] running build
+[0.601s] running build_py
+[0.601s] running install
+[0.601s] running install_lib
+[0.602s] running install_data
+[0.603s] running install_egg_info
+[0.604s] removing '/home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot-0.0.0-py3.10.egg-info' (and everything under it)
+[0.604s] Copying build/slam2robot/slam2robot.egg-info to /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot-0.0.0-py3.10.egg-info
+[0.605s] running install_scripts
+[0.617s] Installing arm_controller script to /home/quan/slam2robot/install/slam2robot/lib/slam2robot
+[0.617s] Installing map_autosaver script to /home/quan/slam2robot/install/slam2robot/lib/slam2robot
+[0.617s] writing list of installed files to '/home/quan/slam2robot/build/slam2robot/install.log'
+[0.633s] Invoked command in '/home/quan/slam2robot' returned '0': PYTHONPATH=/home/quan/slam2robot/build/slam2robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/slam2robot build --build-base /home/quan/slam2robot/build/slam2robot/build install --record /home/quan/slam2robot/build/slam2robot/install.log --single-version-externally-managed install_data

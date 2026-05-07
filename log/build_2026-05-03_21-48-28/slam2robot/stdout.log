@@ -1,0 +1,26 @@
+running egg_info
+writing build/slam2robot/slam2robot.egg-info/PKG-INFO
+writing dependency_links to build/slam2robot/slam2robot.egg-info/dependency_links.txt
+writing entry points to build/slam2robot/slam2robot.egg-info/entry_points.txt
+writing requirements to build/slam2robot/slam2robot.egg-info/requires.txt
+writing top-level names to build/slam2robot/slam2robot.egg-info/top_level.txt
+reading manifest file 'build/slam2robot/slam2robot.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'build/slam2robot/slam2robot.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+running install_data
+copying package.xml -> /home/quan/slam2robot/install/slam2robot/share/slam2robot
+copying launch/gazebo.launch.py -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch
+copying launch/slam_toolbox.launch.py -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch
+copying config/slam_toolbox.yaml -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/config
+copying world/world_1.world -> /home/quan/slam2robot/install/slam2robot/share/slam2robot/world
+running install_egg_info
+removing '/home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot-0.0.0-py3.10.egg-info' (and everything under it)
+Copying build/slam2robot/slam2robot.egg-info to /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot-0.0.0-py3.10.egg-info
+running install_scripts
+Installing arm_controller script to /home/quan/slam2robot/install/slam2robot/lib/slam2robot
+Installing map_autosaver script to /home/quan/slam2robot/install/slam2robot/lib/slam2robot
+writing list of installed files to '/home/quan/slam2robot/build/slam2robot/install.log'
