@@ -14,7 +14,6 @@ config/cartographer_2d.lua
 config/controllers.yaml
 config/slam_toolbox.yaml
 launch/cartographer.launch.py
-launch/cartographer_standalone.launch.py
 launch/display.launch.py
 launch/gazebo.launch.py
 launch/rviz.launch.py

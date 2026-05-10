@@ -6,7 +6,6 @@
 /home/quan/slam2robot/install/slam2robot/lib/python3.10/site-packages/slam2robot/__pycache__/__init__.cpython-310.pyc
 /home/quan/slam2robot/install/slam2robot/share/ament_index/resource_index/packages/slam2robot
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/package.xml
-/home/quan/slam2robot/install/slam2robot/share/slam2robot/launch/cartographer_standalone.launch.py
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch/cartographer.launch.py
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch/rviz.launch.py
 /home/quan/slam2robot/install/slam2robot/share/slam2robot/launch/gazebo.launch.py
