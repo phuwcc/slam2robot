@@ -405,7 +405,7 @@ ros2 launch slam2robot rviz.launch.py
 cd ~/ros2_ws/src/slam2robot
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 bag play src/slam2robot/world2 --clock
+ros2 bag play world_3 --clock 100 --topics /scan /odom /tf /cmd_vel
 ```
 Nhấn Ctrl+C để dừng việc ghi.
 
