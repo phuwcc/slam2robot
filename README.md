@@ -261,7 +261,7 @@ rviz/robot.rviz
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
+ros2 launch slam2robot cartographer.launch.py world:=world_1 slam:=cartographer
 ```
 
 Launch này sẽ khởi động Gazebo, spawn robot và chạy Cartographer.
@@ -379,7 +379,7 @@ ros2 run tf2_tools view_frames
 
 ## 10. Thứ tự chạy đầy đủ
 
-### Mô phỏng + điều khiển tay máy
+### Mô phỏng từng thuật toán
 
 **Terminal 1:**
 
@@ -387,7 +387,7 @@ ros2 run tf2_tools view_frames
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
+ros2 launch slam2robot cartographer.launch.py start_gazebo:=false use_sim_time:=true
 ```
 
 **Terminal 2:**
@@ -396,7 +396,7 @@ ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 launch slam2robot display.launch.py
+ros2 launch slam2robot rviz.launch.py
 ```
 
 **Terminal 3:**
@@ -405,47 +405,16 @@ ros2 launch slam2robot display.launch.py
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
+ros2 bag play world_2 --clock
 ```
+Nhấn Ctrl + C để lưu
 
 **Terminal 4:**
-
+Chạy xong hết map mới chạy lệnh này:
 ```bash
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 run slam2robot arm_controller
+ros2 run map_server map_saver_cli -f ~/map3_cartographer
 ```
 
-### Chạy SLAM Cartographer 2D
-
-**Terminal 1:**
-
-```bash
-cd ~/ros2_ws
-source /opt/ros/humble/setup.bash
-source install/setup.bash
-ros2 launch slam2robot gazebo.launch.py world:=world_1 slam:=cartographer
-```
-
-**Terminal 2:**
-
-```bash
-cd ~/ros2_ws
-source /opt/ros/humble/setup.bash
-source install/setup.bash
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
-```
-
-Di chuyển robot để quét bản đồ.
-
-**Terminal 3:**
-
-```bash
-cd ~/ros2_ws
-source /opt/ros/humble/setup.bash
-source install/setup.bash
-ros2 launch slam2robot display.launch.py
-```
-
-**Khi quét xong**, nhấn `Ctrl+C` ở `Terminal 1`. `map_autosaver` sẽ tự lưu map vào `share/slam2robot/map/slam_map.yaml` và `.pgm`, hoặc đường dẫn bạn truyền qua `map_file`.
