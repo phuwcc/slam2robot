@@ -423,6 +423,6 @@ Chạy xong hết map mới chạy lệnh này:
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 run map_server map_saver_cli -f ~/world_2_new
+ros2 run nav2_map_server map_saver_cli -f ~/world_3_new_haft
 ```
 
