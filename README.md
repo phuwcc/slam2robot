@@ -377,7 +377,7 @@ ros2 run tf2_tools view_frames
 
 ---
 
-## 10. Thứ tự chạy đầy đủ
+## 10. Thứ tự chạy đầy đủ chạy với ROSBAG
 
 ### Mô phỏng từng thuật toán
 
