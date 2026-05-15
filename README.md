@@ -400,22 +400,14 @@ ros2 launch slam2robot rviz.launch.py
 ```
 
 **Terminal 3:**
-Để lưu vào ros_bag:
+Để phát lại ros_bag:
 ```bash
 cd ~/ros2_ws/src/slam2robot
 source /opt/ros/humble/setup.bash
 source install/setup.bash
 ros2 bag play world_3 --clock 100 --topics /scan /odom /tf /cmd_vel
 ```
-Nhấn Ctrl+C để dừng việc ghi.
 
-Để phát lại ros_bag:
-```bash
-cd ~/ros2_ws/src/slam2robot
-source /opt/ros/humble/setup.bash
-source install/setup.bash
-ros2 bag play world_2 --clock
-```
 
 **Terminal 4:**
 Chạy xong hết map mới chạy lệnh này:
@@ -423,6 +415,6 @@ Chạy xong hết map mới chạy lệnh này:
 cd ~/ros2_ws
 source /opt/ros/humble/setup.bash
 source install/setup.bash
-ros2 run nav2_map_server map_saver_cli -f ~/world_3_new_haft
+ros2 run nav2_map_server map_saver_cli -f ~/world_3_new
 ```
 
